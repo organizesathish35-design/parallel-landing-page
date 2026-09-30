@@ -1,0 +1,26 @@
+ok  brand-blue           1920x1080 -> 1920x1080  full 37.3MB  loop 5.2MB
+ok  isl                  1920x1080 -> 1920x1080  full 34.1MB  loop 5.0MB
+ok  zestbot-tvc          1920x1080 -> 1920x1080  full 39.9MB  loop 2.5MB
+ok  mithra               3840x2160 -> 1920x1080  full 28.6MB  loop 5.5MB
+ok  dollars              3836x2160 -> 1918x1080  full 33.6MB  loop 4.5MB
+ok  di-files             3840x2160 -> 1920x1080  full 26.2MB  loop 2.1MB
+ok  bts                  1920x1080 -> 1920x1080  full 22.3MB  loop 5.1MB
+ok  fennec-cricket       2160x3832 -> 1080x1916  full 20.3MB  loop 4.5MB
+ok  zestbot-ai           1080x1920 -> 1080x1920  full 18.6MB  loop 5.2MB
+ok  merino               1920x1080 -> 1920x1080  full 104.9MB  loop 4.2MB
+ok  audi-childrens-day   1440x2560 -> 1080x1920  full 4.4MB  loop 2.4MB
+ok  atticply             1440x2560 -> 1080x1920  full 15.5MB  loop 4.9MB
+ok  wellness-shampoo     1440x2560 -> 1080x1920  full 6.3MB  loop 3.9MB
+ok  harmone              3840x2160 -> 1920x1080  full 119.3MB  loop 4.5MB
+ok  mockit               1080x1920 -> 1080x1920  full 5.0MB  loop 0.5MB
+ok  mealomart-food       1440x2560 -> 1080x1920  full 12.5MB  loop 3.5MB
+ok  tiger-podcast        1920x1080 -> 1920x1080  full 17.7MB  loop 5.0MB
+ok  interior             2160x3840 -> 1080x1920  full 22.4MB  loop 3.7MB
+ok  holadrive            1920x1080 -> 1920x1080  full 12.2MB  loop 1.1MB
+ok  ai-hospital          3840x2160 -> 1920x1080  full 26.8MB  loop 2.1MB
+ok  deebee               3840x2160 -> 1920x1080  full 8.4MB  loop 1.3MB
+ok  fortinet             1920x1080 -> 1920x1080  full 16.0MB  loop 1.8MB
+ok  led-3d               3840x2160 -> 1920x1080  full 25.2MB  loop 1.4MB
+ok  hk-vitals            1920x1080 -> 1920x1080  full 6.4MB  loop 0.5MB
+ok  invictus             1920x1080 -> 1920x1080  full 52.1MB  loop 1.8MB
+done: 25 videos -> E:\portfolio website\Client works\PARALLEL Brand\src\content\videos.json

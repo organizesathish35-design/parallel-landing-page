@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PARALLEL — TV Commercials & Films, Bengaluru</title>
+    <meta name="description" content="PARALLEL is a Bengaluru creative studio that makes TV commercials and films. We write the script, draw the storyboard, shoot with our own crew and finish the film in-house — for ZestBot, ISL, Brand Blue and more." />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/hero/city.webp" as="image" type="image/webp" />
+    <link rel="preload" href="/hero/building.webp" as="image" type="image/webp" />
+  </head>
+  <body class="is-loading">
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__mark"><span></span><span></span></div>
+      <div class="loader__count"><span id="loader-count">000</span></div>
+    </div>
+
+    <header class="nav">
+      <a class="nav__logo" href="#top" data-logo aria-label="Parallel — home"></a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#screening">Work</a>
+        <a href="#process">How we work</a>
+        <a href="#edit">Films</a>
+      </nav>
+      <div class="nav__right">
+        <a class="btn" href="#rooftop"><span>Start a project</span><i>→</i></a>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ OUTSIDE — one day outside the studio ============ -->
+      <section class="hero" id="hero" aria-label="PARALLEL — TV commercials and films">
+        <div class="hero__stage">
+          <canvas class="gl" id="gl"></canvas>
+          <div class="hero__shade"></div>
+          <div class="hero__ui">
+            <div class="intro" data-parallax="-22">
+              <p class="eyebrow"><span>Creative studio</span><span class="rule"></span><span>Bengaluru · Hyderabad · Dubai</span></p>
+              <h1 class="intro__mark" data-wordmark>PARALLEL</h1>
+              <p class="statement">We make <b>TV commercials</b><br />and <b>films.</b></p>
+              <p class="tagline">Script · Storyboard · Shoot · Post — one crew</p>
+            </div>
+            <div class="scrollcue"><span class="scrollcue__bar"></span><span>Scroll</span></div>
+            <p class="enter-cue">Scroll to step inside</p>
+          </div>
+          <div class="hero__glass" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- ============ 01 — TV COMMERCIALS ============ -->
+      <section class="room room--screening" id="screening" data-room="01" data-name="TV commercials" aria-labelledby="screening-h">
+        <div class="room__stage">
+          <div class="screen" data-screen>
+            <video class="screen__v" data-screen-video muted playsinline loop preload="none"></video>
+            <div class="screen__static" data-static></div>
+            <span class="screen__tag"><i></i>On air</span>
+          </div>
+          <div class="room__ui">
+            <div class="room__head" data-head data-parallax="-18">
+              <p class="eyebrow"><span>Our TV commercials</span></p>
+              <h2 id="screening-h" class="display">Commercials that went on air.</h2>
+              <p class="lede">We wrote, shot and finished these commercials for <b>ZestBot</b>, <b>ISL</b> (JioCinema × Sports18) and <b>Brand Blue</b>. Keep scrolling to play each one.</p>
+            </div>
+            <div class="reel" data-reel>
+              <div class="reel__now">
+                <p class="reel__kind" data-reel-kind></p>
+                <h3 class="reel__title" data-reel-title></h3>
+                <p class="reel__line" data-reel-line></p>
+                <button class="btn btn--solid" type="button" data-reel-play><span>Watch with sound</span><i>▶</i></button>
+              </div>
+              <ol class="reel__list" data-reel-list></ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HOW WE MAKE A COMMERCIAL — one parallax fly-through ============ -->
+      <section class="process" id="process" data-room="02" data-name="How we work" aria-labelledby="process-h">
+        <div class="process__stage">
+          <div class="depth" data-depth aria-hidden="false">
+            <!-- far → near: the finished frame, the shoot, the storyboard wall, the script -->
+            <div class="layer layer--screen" data-layer="3">
+              <div class="compare" data-compare>
+                <img class="compare__final" data-compare-final alt="Frame from the finished ZestBot commercial" />
+                <div class="compare__sketch" data-compare-sketch><img data-compare-ink alt="Storyboard sketch of the same shot" /></div>
+                <div class="compare__handle" data-compare-handle role="slider" tabindex="0" aria-label="Compare the storyboard sketch with the finished frame" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span></span></div>
+                <span class="compare__tag compare__tag--l">Storyboard</span>
+                <span class="compare__tag compare__tag--r">Finished film</span>
+              </div>
+            </div>
+            <div class="layer layer--shoot" data-layer="2">
+              <div class="shoot"><video class="shoot__v" data-bts muted playsinline loop preload="none"></video><span class="shoot__tag"><i></i>Rec · ZestBot shoot</span></div>
+            </div>
+            <div class="layer layer--board" data-layer="1" data-board></div>
+            <div class="layer layer--script" data-layer="0">
+              <div class="script" data-script>
+                <div class="script__head"><span>ZESTBOT · SC. 02 · KIRANA STORE</span><span>DAY / EXT</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="process__copy">
+            <p class="eyebrow"><span>How we make a commercial</span></p>
+            <ol class="rail" data-rail>
+              <li>Script</li><li>Storyboard</li><li>Shoot</li><li>On air</li>
+            </ol>
+            <div class="ptexts">
+              <div class="ptext" data-ptext>
+                <h2 id="process-h" class="display">It starts as a script.</h2>
+                <p class="lede">Before we shoot anything, we write it. This is a real page from our <b>ZestBot</b> TV commercial — a kirana shop owner losing customers to online apps, until a superhero lands on his supply truck.</p>
+                <p class="lede lede--small">Highlighted: the <mark>problem</mark>, the <mark>hero</mark> and the <mark>promise</mark> — what every ad needs.</p>
+              </div>
+              <div class="ptext" data-ptext>
+                <h2 class="display">Then we draw every shot.</h2>
+                <p class="lede">Camera angle, action and dialogue are sketched frame by frame, so the shoot day runs fast and on budget. These are the original ZestBot storyboard panels.</p>
+              </div>
+              <div class="ptext" data-ptext>
+                <h2 class="display">We shoot it with our own crew.</h2>
+                <p class="lede">One team from our studio, on location or on a set:</p>
+                <ul class="crewline" data-crew></ul>
+                <button class="btn btn--solid" type="button" data-play="bts"><span>Watch behind the scenes</span><i>▶</i></button>
+              </div>
+              <div class="ptext" data-ptext>
+                <h2 class="display">And it goes on air.</h2>
+                <p class="lede">Drag the line: the pencil storyboard on the left, the same frame in the finished commercial on the right.</p>
+                <div class="chips" data-compare-chips></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 — FILMS ============ -->
+      <section class="room room--edit" id="edit" data-room="04" data-name="Films" aria-labelledby="edit-h">
+        <div class="room__stage">
+          <div class="room__ui">
+            <div class="room__head room__head--row" data-parallax="-14">
+              <div>
+                <p class="eyebrow"><span>Brand films &amp; short films</span></p>
+                <h2 id="edit-h" class="display">Films for brands, and stories of our own.</h2>
+              </div>
+              <div class="formats-wrap">
+                <p class="label">We also make</p>
+                <ul class="formats" data-formats></ul>
+              </div>
+            </div>
+            <p class="lede lede--strip">Besides commercials we make brand films, real-estate films, music videos and short fiction. Scroll to browse — click any film to watch it with sound.</p>
+            <div class="strip" data-strip data-parallax="18"><div class="strip__track" data-strip-track></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 05 — AI & ANIMATION ============ -->
+      <section class="room room--lab" id="lab" data-room="05" data-name="AI & animation" aria-labelledby="lab-h">
+        <div class="room__stage">
+          <div class="lab__cols" data-lab data-parallax="22"></div>
+          <div class="room__dim room__dim--lab"></div>
+          <div class="room__ui">
+            <div class="room__head room__head--lab" data-parallax="-16">
+              <p class="eyebrow"><span>AI &amp; animation</span></p>
+              <h2 id="lab-h" class="display">When it can't be filmed, we animate it.</h2>
+              <p class="lede">2D, 2.5D and 3D animation, explainer videos, product visualisation and AI-generated films. Each one is still written, directed, edited and sound-designed by our team.</p>
+              <p class="label">How an AI film is made</p>
+              <ol class="steps" data-lab-steps></ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 06 — PODCAST STUDIO ============ -->
+      <section class="room room--story" id="story-room" data-room="06" data-name="Podcast studio" aria-labelledby="story-h">
+        <div class="room__stage">
+          <div class="room__ui story">
+            <div class="story__copy" data-parallax="-12">
+              <p class="eyebrow"><span>Podcast studio</span></p>
+              <h2 id="story-h" class="display">A podcast studio in our building.</h2>
+              <p class="lede">The <b>Story Room</b> is our multi-camera podcast studio in Bengaluru. You bring the conversation — we record it, edit it and deliver the full episode plus shorts and reels.</p>
+              <p class="label">Choose a set</p>
+              <div class="sets" data-sets role="radiogroup" aria-label="Choose a set"></div>
+            </div>
+            <div class="story__photo" data-sets-bg data-parallax="20"></div>
+            <ol class="pod" data-pod></ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT — back outside, on the roof ============ -->
+      <section class="rooftop" id="rooftop" aria-labelledby="roof-h">
+        <div class="rooftop__stage" data-rooftop-stage>
+          <div class="rooftop__shade"></div>
+          <div class="rooftop__ui" data-parallax="-14">
+            <p class="eyebrow"><span>Contact</span><span class="rule"></span><span>Start a project</span></p>
+            <h2 id="roof-h" class="display">Have a commercial or film in mind?</h2>
+            <p class="lede">Tell us about it. We'll come back with an idea, a plan and a budget.</p>
+            <div class="contact" data-contact></div>
+            <footer class="foot">
+              <span>© 2026 PARALLEL Creative Studio</span>
+              <span data-cities></span>
+              <a href="#top">Back to the top ↑</a>
+            </footer>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- player -->
+    <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+      <button class="lb__close" type="button" data-lb-close aria-label="Close">×</button>
+      <div class="lb__body">
+        <video class="lb__v" data-lb-video controls playsinline></video>
+        <div class="lb__meta"><p data-lb-kind></p><h3 data-lb-title></h3></div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
