@@ -3,20 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PARALLEL — TV Commercials & Films, Bengaluru</title>
-    <meta name="description" content="PARALLEL is a Bengaluru creative studio that makes TV commercials and films. We write the script, draw the storyboard, shoot with our own crew and finish the film in-house — for ZestBot, ISL, Brand Blue and more." />
-    <meta name="theme-color" content="#FFFFFF" />
+    <title>TV Commercial Production in Bengaluru | PARALLEL</title>
+    <meta name="description" content="TV commercials for brands, made by one Bengaluru crew: script, storyboard, shoot and post in-house, in 4 languages. On air for ZestBot, ISL and Brand Blue." />
+    <meta name="theme-color" content="#0b0b0d" />
+    <!-- shared links (WhatsApp, LinkedIn, Slack) should explain themselves out of context -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PARALLEL" />
+    <meta property="og:title" content="PARALLEL — TV commercials people remember" />
+    <meta property="og:description" content="One Bengaluru crew writes, storyboards, shoots and finishes your TV commercial. Tell us about your launch and get an idea, a plan and a budget." />
+    <meta property="og:image" content="/hero/city.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/hero/building.webp" as="image" type="image/webp" fetchpriority="high" />
     <link rel="preload" href="/hero/city.webp" as="image" type="image/webp" />
-    <link rel="preload" href="/hero/building.webp" as="image" type="image/webp" />
   </head>
-  <body class="is-loading">
-    <div class="loader" id="loader" aria-hidden="true">
-      <div class="loader__mark"><span></span><span></span></div>
-      <div class="loader__count"><span id="loader-count">000</span></div>
-    </div>
+  <body>
+    <a class="skip" href="#screening">Skip to content</a>
 
     <header class="nav">
       <a class="nav__logo" href="#top" data-logo aria-label="Parallel — home"></a>
@@ -24,29 +28,52 @@
         <a href="#screening">Work</a>
         <a href="#process">How we work</a>
         <a href="#edit">Films</a>
+        <a href="#lab">Animation</a>
+        <a href="#story-room">Podcast</a>
+        <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__right">
-        <a class="btn" href="#rooftop"><span>Start a project</span><i>→</i></a>
+        <a class="btn btn--accent" href="#contact" data-lead="nav"><span>Get a quote</span><i aria-hidden="true">→</i></a>
+        <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>Menu</button>
       </div>
+      <span class="progress" data-progress aria-hidden="true"></span>
     </header>
 
+    <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <button class="menu__close" type="button" data-menu-close>Close</button>
+      <nav aria-label="Sections">
+        <ol class="menu__list">
+          <li><a href="#screening">Work</a></li>
+          <li><a href="#process">How we work</a></li>
+          <li><a href="#edit">Films</a></li>
+          <li><a href="#lab">Animation</a></li>
+          <li><a href="#story-room">Podcast</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </nav>
+      <div class="menu__foot">
+        <a class="btn btn--accent" href="#contact" data-lead="menu"><span>Get a quote</span><i aria-hidden="true">→</i></a>
+      </div>
+    </div>
+
     <main id="top">
-      <!-- ============ OUTSIDE — one day outside the studio ============ -->
-      <section class="hero" id="hero" aria-label="PARALLEL — TV commercials and films">
-        <div class="hero__stage">
-          <canvas class="gl" id="gl"></canvas>
-          <div class="hero__shade"></div>
-          <div class="hero__ui">
-            <div class="intro" data-parallax="-22">
-              <p class="eyebrow"><span>Creative studio</span><span class="rule"></span><span>Bengaluru · Hyderabad · Dubai</span></p>
-              <h1 class="intro__mark" data-wordmark>PARALLEL</h1>
-              <p class="statement">We make <b>TV commercials</b><br />and <b>films.</b></p>
-              <p class="tagline">Script · Storyboard · Shoot · Post — one crew</p>
-            </div>
-            <div class="scrollcue"><span class="scrollcue__bar"></span><span>Scroll</span></div>
-            <p class="enter-cue">Scroll to step inside</p>
+      <!-- ============ HERO — one screen: who we are, what we make, the next step ============ -->
+      <section class="hero" id="hero" aria-labelledby="hero-h">
+        <div class="hero__poster" aria-hidden="true">
+          <img class="hero__city" src="/hero/city.webp" alt="" width="1686" height="933" decoding="async" />
+          <img class="hero__tower" src="/hero/building.webp" alt="" width="1686" height="933" fetchpriority="high" />
+        </div>
+        <div class="hero__shade"></div>
+        <div class="hero__ui">
+          <p class="eyebrow"><span>TV commercial studio</span><span class="rule"></span><span>Bengaluru · Hyderabad · Dubai</span></p>
+          <div class="intro__mark" data-wordmark aria-hidden="true"></div>
+          <h1 id="hero-h" class="statement"><b>TV commercials</b> that get your brand <b>remembered.</b></h1>
+          <p class="hero__lede">One crew writes the script, draws every shot, shoots it and finishes it — in English, Kannada, Telugu or Hindi. You brief one team, not five vendors.</p>
+          <div class="hero__cta">
+            <a class="btn btn--accent btn--lg" href="#contact" data-lead="hero"><span>Get a free quote</span><i aria-hidden="true">→</i></a>
+            <a class="btn btn--ghost btn--lg" href="#screening"><span>Watch our ads</span><i aria-hidden="true">↓</i></a>
           </div>
-          <div class="hero__glass" aria-hidden="true"></div>
+          <p class="hero__proof"><span>On air for</span> ZestBot · ISL on JioCinema × Sports18 · Brand Blue</p>
         </div>
       </section>
 
@@ -61,15 +88,17 @@
           <div class="room__ui">
             <div class="room__head" data-head data-parallax="-18">
               <p class="eyebrow"><span>Our TV commercials</span></p>
-              <h2 id="screening-h" class="display">Commercials that went on air.</h2>
-              <p class="lede">We wrote, shot and finished these commercials for <b>ZestBot</b>, <b>ISL</b> (JioCinema × Sports18) and <b>Brand Blue</b>. Keep scrolling to play each one.</p>
+              <h2 id="screening-h" class="display">Ads we wrote, shot and put on air.</h2>
+              <p class="lede"><b>ZestBot</b> needed kirana owners to trust an app. <b>ISL</b> needed match-day feeling for JioCinema × Sports18. <b>Brand Blue</b> needed shoppers through the door. Keep scrolling to play each one.</p>
             </div>
             <div class="reel" data-reel>
               <div class="reel__now">
                 <p class="reel__kind" data-reel-kind></p>
                 <h3 class="reel__title" data-reel-title></h3>
                 <p class="reel__line" data-reel-line></p>
-                <button class="btn btn--solid" type="button" data-reel-play><span>Watch with sound</span><i>▶</i></button>
+                <div class="reel__actions">
+                  <button class="btn btn--solid" type="button" data-reel-play><span>Watch with sound</span><i aria-hidden="true">▶</i></button>
+                </div>
               </div>
               <ol class="reel__list" data-reel-list></ol>
             </div>
@@ -111,21 +140,21 @@
               <div class="ptext" data-ptext>
                 <h2 id="process-h" class="display">It starts as a script.</h2>
                 <p class="lede">Before we shoot anything, we write it. This is a real page from our <b>ZestBot</b> TV commercial — a kirana shop owner losing customers to online apps, until a superhero lands on his supply truck.</p>
-                <p class="lede lede--small">Highlighted: the <mark>problem</mark>, the <mark>hero</mark> and the <mark>promise</mark> — what every ad needs.</p>
+                <p class="lede lede--small">Highlighted: the <mark>problem</mark>, the <mark>hero</mark> and the <mark>promise</mark>. Every ad we write has all three, so viewers know what you sell and why it matters.</p>
               </div>
               <div class="ptext" data-ptext>
                 <h2 class="display">Then we draw every shot.</h2>
-                <p class="lede">Camera angle, action and dialogue are sketched frame by frame, so the shoot day runs fast and on budget. These are the original ZestBot storyboard panels.</p>
+                <p class="lede">Camera angle, action and dialogue are sketched frame by frame. You approve every shot before shoot day, so there are no surprises on set or on the bill. These are the original ZestBot panels.</p>
               </div>
               <div class="ptext" data-ptext>
                 <h2 class="display">We shoot it with our own crew.</h2>
-                <p class="lede">One team from our studio, on location or on a set:</p>
+                <p class="lede">One team from our studio, on location or on a set. One point of contact for you, start to finish:</p>
                 <ul class="crewline" data-crew></ul>
                 <button class="btn btn--solid" type="button" data-play="bts"><span>Watch behind the scenes</span><i>▶</i></button>
               </div>
               <div class="ptext" data-ptext>
                 <h2 class="display">And it goes on air.</h2>
-                <p class="lede">Drag the line: the pencil storyboard on the left, the same frame in the finished commercial on the right.</p>
+                <p class="lede">You get masters for TV, OTT and social. Drag the line: the pencil storyboard on the left, the same frame in the finished ad on the right.</p>
                 <div class="chips" data-compare-chips></div>
               </div>
             </div>
@@ -140,14 +169,14 @@
             <div class="room__head room__head--row" data-parallax="-14">
               <div>
                 <p class="eyebrow"><span>Brand films &amp; short films</span></p>
-                <h2 id="edit-h" class="display">Films for brands, and stories of our own.</h2>
+                <h2 id="edit-h" class="display">When your story needs more than an ad slot.</h2>
               </div>
               <div class="formats-wrap">
                 <p class="label">We also make</p>
                 <ul class="formats" data-formats></ul>
               </div>
             </div>
-            <p class="lede lede--strip">Besides commercials we make brand films, real-estate films, music videos and short fiction. Scroll to browse — click any film to watch it with sound.</p>
+            <p class="lede lede--strip">Brand films, real-estate films, music videos and short fiction — made by the same crew as our commercials. Scroll to browse, and click any film to watch it with sound.</p>
             <div class="strip" data-strip data-parallax="18"><div class="strip__track" data-strip-track></div></div>
           </div>
         </div>
@@ -162,7 +191,7 @@
             <div class="room__head room__head--lab" data-parallax="-16">
               <p class="eyebrow"><span>AI &amp; animation</span></p>
               <h2 id="lab-h" class="display">When it can't be filmed, we animate it.</h2>
-              <p class="lede">2D, 2.5D and 3D animation, explainer videos, product visualisation and AI-generated films. Each one is still written, directed, edited and sound-designed by our team.</p>
+              <p class="lede">Product demos, explainers and launch ads without a shoot day: 2D, 2.5D and 3D animation and AI-generated films. Each one is still written, directed, edited and sound-designed by our team.</p>
               <p class="label">How an AI film is made</p>
               <ol class="steps" data-lab-steps></ol>
             </div>
@@ -176,8 +205,8 @@
           <div class="room__ui story">
             <div class="story__copy" data-parallax="-12">
               <p class="eyebrow"><span>Podcast studio</span></p>
-              <h2 id="story-h" class="display">A podcast studio in our building.</h2>
-              <p class="lede">The <b>Story Room</b> is our multi-camera podcast studio in Bengaluru. You bring the conversation — we record it, edit it and deliver the full episode plus shorts and reels.</p>
+              <h2 id="story-h" class="display">Your brand's podcast, made in our building.</h2>
+              <p class="lede">The <b>Story Room</b> is our multi-camera podcast studio in Bengaluru. Bring your founder, experts or customers. We record, edit and deliver the full episode, plus shorts and reels for your channels.</p>
               <p class="label">Choose a set</p>
               <div class="sets" data-sets role="radiogroup" aria-label="Choose a set"></div>
             </div>
@@ -187,31 +216,94 @@
         </div>
       </section>
 
-      <!-- ============ CONTACT — back outside, on the roof ============ -->
-      <section class="rooftop" id="rooftop" aria-labelledby="roof-h">
-        <div class="rooftop__stage" data-rooftop-stage>
-          <div class="rooftop__shade"></div>
-          <div class="rooftop__ui" data-parallax="-14">
-            <p class="eyebrow"><span>Contact</span><span class="rule"></span><span>Start a project</span></p>
-            <h2 id="roof-h" class="display">Have a commercial or film in mind?</h2>
-            <p class="lede">Tell us about it. We'll come back with an idea, a plan and a budget.</p>
-            <div class="contact" data-contact></div>
-            <footer class="foot">
-              <span>© 2026 PARALLEL Creative Studio</span>
-              <span data-cities></span>
-              <a href="#top">Back to the top ↑</a>
-            </footer>
+      <!-- ============ FAQ — the questions a brand asks before it briefs us ============ -->
+      <section class="faq" id="faq" data-room="07" data-name="FAQ" aria-labelledby="faq-h">
+        <div class="faq__inner">
+          <div class="faq__head">
+            <p class="eyebrow"><span>Before you brief us</span></p>
+            <h2 id="faq-h" class="display">Questions brands ask us first.</h2>
+            <a class="btn btn--accent" href="#contact" data-lead="faq"><span>Get a free quote</span><i aria-hidden="true">→</i></a>
+          </div>
+          <div class="faq__list">
+            <details>
+              <summary>How much does a TV commercial cost?</summary>
+              <p>It depends on the script: locations, cast, shoot days and animation. Tell us your budget range and we'll shape the idea to fit it, or tell you honestly if it won't.</p>
+            </details>
+            <details>
+              <summary>We don't have a script yet. Can you write one?</summary>
+              <p>Yes. Bring a brief, a product or just a launch date. Our writers come up with the concept, script and dialogue, and you sign off before anything is shot.</p>
+            </details>
+            <details>
+              <summary>Which languages do you make ads in?</summary>
+              <p>English, Kannada, Telugu and Hindi. We write and record each version, so it sounds native, not dubbed.</p>
+            </details>
+            <details>
+              <summary>Do we get versions for YouTube, Instagram and OTT?</summary>
+              <p>Yes. Along with the TV master, we deliver the cuts and formats you need for OTT and social.</p>
+            </details>
+            <details>
+              <summary>How long does it take?</summary>
+              <p>It depends on the shoot. Share your on-air date and we'll plan the script, storyboard, shoot and edit backwards from it.</p>
+            </details>
+            <details>
+              <summary>Can you make an ad without a shoot?</summary>
+              <p>Yes. For product demos, explainers or tight timelines, we make the ad in 2D, 3D or AI animation, still written, directed and sound-designed by our team.</p>
+            </details>
           </div>
         </div>
       </section>
+
+      <!-- ============ CONTACT — the form, plus every direct line ============ -->
+      <section class="contact-sec" id="contact" aria-labelledby="contact-h">
+        <div class="contact-sec__poster" aria-hidden="true">
+          <img src="/hero/city.webp" alt="" loading="lazy" decoding="async" />
+        </div>
+        <div class="contact-sec__inner">
+          <div class="contact-sec__copy">
+            <p class="eyebrow"><span>Get a quote</span></p>
+            <h2 id="contact-h" class="display">Planning your next commercial?</h2>
+            <p class="lede">Tell us the brand, the product and when it needs to go on air. We'll come back with an idea, a plan and a budget. Free, with no obligation.</p>
+          </div>
+          <div class="contact-sec__form" data-lead-mount="contact"></div>
+          <div class="contact" data-contact></div>
+        </div>
+        <footer class="foot">
+          <span>© 2026 PARALLEL Creative Studio</span>
+          <span data-cities></span>
+          <a href="#top">Back to the top ↑</a>
+        </footer>
+      </section>
     </main>
+
+    <!-- quote popup: every "Get a quote" opens it -->
+    <dialog class="quote" id="quote" aria-labelledby="quote-h">
+      <button class="quote__close" type="button" data-quote-close aria-label="Close">×</button>
+      <p class="eyebrow"><span>Get a quote</span></p>
+      <h2 id="quote-h" class="quote__h">Let's plan your commercial.</h2>
+      <p class="quote__lede">Share a few details. We'll come back with an idea, a plan and a budget — free, no obligation.</p>
+      <div data-lead-mount="popup"></div>
+    </dialog>
+
+    <!-- phones: the next step is always under the thumb -->
+    <div class="mbar" data-mbar aria-hidden="true">
+      <a class="mbar__quote" href="#contact" data-lead="mobile-bar" tabindex="-1">
+        <span>Get a quote</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h10.5M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" /></svg>
+      </a>
+      <a class="mbar__icon" data-mbar-wa href="#" target="_blank" rel="noopener" tabindex="-1" aria-label="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.3 7.9c.3-.3.8-.3 1 .1l.9 1.4c.2.3.1.7-.1.9l-.5.5a5.6 5.6 0 0 0 2.6 2.6l.5-.5c.2-.2.6-.3.9-.1l1.4.9c.4.2.4.7.1 1l-.6.6c-.6.6-1.4.7-2.1.4a9 9 0 0 1-4.4-4.4c-.3-.7-.2-1.5.4-2.1z" fill="currentColor" /></svg>
+      </a>
+      <a class="mbar__icon" data-mbar-call href="#" tabindex="-1" aria-label="Call the studio">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 3.8c.4-.4 1.1-.4 1.4.1l1.9 2.7c.3.5.3 1.1-.1 1.5l-1.1 1.1a11.6 11.6 0 0 0 5.3 5.3l1.1-1.1c.4-.4 1-.4 1.5-.1l2.7 1.9c.5.3.5 1 .1 1.4l-1.3 1.3c-.9.9-2.3 1.2-3.5.7A18 18 0 0 1 5.3 8.6c-.5-1.2-.2-2.6.7-3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></svg>
+      </a>
+    </div>
 
     <!-- player -->
     <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Video player" hidden>
-      <button class="lb__close" type="button" data-lb-close aria-label="Close">×</button>
+      <button class="lb__close" type="button" data-lb-close aria-label="Close player">×</button>
       <div class="lb__body">
         <video class="lb__v" data-lb-video controls playsinline></video>
-        <div class="lb__meta"><p data-lb-kind></p><h3 data-lb-title></h3></div>
+        <div class="lb__meta"><div><p data-lb-kind></p><h3 data-lb-title></h3></div><button class="focus-switch" type="button" role="switch" aria-checked="false" data-focus-toggle><span class="focus-switch__track" aria-hidden="true"></span><span>Focus mode</span></button></div>
       </div>
     </div>
 

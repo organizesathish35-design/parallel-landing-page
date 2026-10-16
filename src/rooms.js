@@ -3,8 +3,12 @@ import {
   byId, fmtDur, media, onAir, script, panels, compare, crew,
   films, filmFormats, labTracks, labSteps, sets, podcastSteps, contact,
 } from './content/site.js'
+import { motion } from './motion.js'
 
 const { clamp, mapRange } = gsap.utils
+// Phones get their own version: every scene is a normal section with native
+// scroll (no pinning), so the scroll-driven choreography below is skipped there.
+const mobile = matchMedia('(max-width: 720px)')
 const ease = (t) => t * t * (3 - 2 * t)
 const seg = (q, a, b) => ease(clamp(0, 1, (q - a) / (b - a)))
 const $ = (root, s) => root.querySelector(s)
@@ -24,32 +28,42 @@ const near = (el) => {
   return r.bottom > -innerHeight * 0.5 && r.top < innerHeight * 1.5
 }
 
-// play only what is on screen
+// play only what is on screen, and nothing while motion is paused
+const onScreen = (el) => {
+  const r = el.getBoundingClientRect()
+  return r.bottom > 0 && r.top < innerHeight
+}
+const autoplaying = new Set()
 const vis = new IntersectionObserver((entries) => {
   for (const e of entries) {
     const v = e.target
-    if (e.isIntersecting && v.dataset.want !== 'off') v.play().catch(() => {})
+    if (e.isIntersecting && !motion.reduced) v.play().catch(() => {})
     else v.pause()
   }
 }, { threshold: 0.15 })
 function autoplay(v) {
   v.muted = true
   v.playsInline = true
+  autoplaying.add(v)
   vis.observe(v)
 }
 function setSrc(v, src) {
   if (v.getAttribute('src') === src) return
   v.src = src
-  const r = v.getBoundingClientRect()
-  if (r.bottom > 0 && r.top < innerHeight) v.play().catch(() => {})
+  if (onScreen(v) && !motion.reduced) v.play().catch(() => {})
 }
+const cards = new Set()
+motion.onChange((reduced) => {
+  autoplaying.forEach((v) => (reduced || !onScreen(v) ? v.pause() : v.play().catch(() => {})))
+  if (reduced) cards.forEach((c) => c._stop())
+})
 
 function card(v, { wide = true } = {}) {
   const m = media(v.id)
   const el = h(`
     <button class="card" type="button" data-id="${v.id}">
       <span class="card__media" style="--car:${v.w}/${v.h}">
-        <img src="${m.thumb}" alt="" decoding="async" fetchpriority="low" />
+        <img src="${m.thumb}" alt="" loading="lazy" decoding="async" />
         <video muted playsinline loop preload="none"></video>
         <span class="card__play" aria-hidden="true">▶</span>
       </span>
@@ -59,6 +73,7 @@ function card(v, { wide = true } = {}) {
   el.setAttribute('aria-label', `Play ${v.title} — ${v.client}`)
   const video = el.querySelector('video')
   const live = () => {
+    if (motion.reduced) return
     if (!video.src) video.src = m.loop
     video.play().then(() => el.classList.add('is-live')).catch(() => {})
   }
@@ -73,6 +88,11 @@ function card(v, { wide = true } = {}) {
   el.addEventListener('blur', idle)
   el._live = live
   el._idle = idle
+  el._stop = () => {
+    video.pause()
+    el.classList.remove('is-live')
+  }
+  cards.add(el)
   return el
 }
 
@@ -128,6 +148,19 @@ export function initRooms({ lenis, lightbox }) {
     $(room, '[data-reel-play]').addEventListener('click', () => play(onAir[current].id, onAir[current].kind))
     screen.addEventListener('click', () => play(onAir[current].id, onAir[current].kind))
 
+    // phones: the player grows from under the heading to full bleed, and the
+    // credits ride directly beneath it, so the pinned screen never has dead space
+    function phoneLayout(W, H, g) {
+      const w0 = W - 2 * g, w1 = W, h1 = (W * 9) / 16
+      const y0 = head.offsetTop + head.offsetHeight + 24
+      const bar = 72 // the quote bar along the bottom
+      const gap = 28 // player to credits
+      const group = h1 + gap + reel.offsetHeight
+      const y1 = Math.max(72, (H - bar - group) / 2 + 8)
+      reel.style.setProperty('--reel-y', `${(y1 + h1 + gap).toFixed(1)}px`)
+      return { w0, x0: g, y0, w1, x1: 0, y1 }
+    }
+
     updaters.push(() => {
       if (!near(room)) return
       const q = progressOf(room)
@@ -135,14 +168,18 @@ export function initRooms({ lenis, lightbox }) {
       const W = innerWidth, H = innerHeight
       const g = W <= 720 ? 22 : Math.min(88, Math.max(24, W * 0.05)) // matches --gutter
       const wide = W / H > 1.2 && W > 1100
-      // start: beside the heading (wide) or under it (tall)
-      const w0 = wide ? W * 0.44 : W - 2 * g
-      const x0 = wide ? W - g - w0 : g
-      const y0 = wide ? (H - (w0 * 9) / 16) / 2 + 20 : H * 0.52
-      // end: the biggest 16:9 player that still leaves room for the credits below it
-      const w1 = Math.min(W - 2 * g, ((H - (wide ? 96 : 90) - (wide ? 170 : 260)) * 16) / 9)
-      const x1 = (W - w1) / 2
-      const y1 = wide ? 88 : Math.max(96, (H - (w1 * 9) / 16 - 250) / 2 + 40)
+      let w0, x0, y0, w1, x1, y1
+      if (mobile.matches) ({ w0, x0, y0, w1, x1, y1 } = phoneLayout(W, H, g))
+      else {
+        // start: beside the heading (wide) or under it (tall)
+        w0 = wide ? W * 0.44 : W - 2 * g
+        x0 = wide ? W - g - w0 : g
+        y0 = wide ? (H - (w0 * 9) / 16) / 2 + 20 : H * 0.52
+        // end: the biggest 16:9 player that still leaves room for the credits below it
+        w1 = Math.min(W - 2 * g, ((H - (wide ? 96 : 90) - (wide ? 210 : 280)) * 16) / 9)
+        x1 = (W - w1) / 2
+        y1 = wide ? 88 : Math.max(96, (H - (w1 * 9) / 16 - 250) / 2 + 40)
+      }
       const w = w0 + (w1 - w0) * grow
       screen.style.setProperty('--w', `${w.toFixed(1)}px`)
       screen.style.setProperty('--x', `${(x0 + (x1 - x0) * grow).toFixed(1)}px`)
@@ -186,7 +223,7 @@ export function initRooms({ lenis, lightbox }) {
     const board = $(room, '[data-board]')
     const spots = [[-19, -21, 120], [3, -25, -80], [20, -9, 60], [-15, 15, -40], [5, 21, 140], [22, 25, -120]]
     const panelsEls = spots.map(([x, y, dz], i) => {
-      const im = h(`<img class="panel" src="/story/panel-${panels[i]}.webp" alt="" decoding="async" />`)
+      const im = h(`<img class="panel" src="/story/panel-${panels[i]}.webp" alt="" loading="lazy" decoding="async" />`)
       im.dataset.x = x
       im.dataset.y = y
       im.dataset.dz = dz
@@ -212,6 +249,7 @@ export function initRooms({ lenis, lightbox }) {
     const setX = (x) => {
       box.style.setProperty('--x', `${x}%`)
       handle.setAttribute('aria-valuenow', Math.round(x))
+      handle.setAttribute('aria-valuetext', `${Math.round(x)}% storyboard`)
     }
     const pick = (id) => {
       fin.src = `/story/final-${id}.webp`
@@ -237,12 +275,25 @@ export function initRooms({ lenis, lightbox }) {
     box.addEventListener('pointerup', () => box.removeEventListener('pointermove', drag))
     handle.addEventListener('keydown', (e) => {
       const cur = parseFloat(box.style.getPropertyValue('--x')) || 50
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        touched = true
-        setX(clamp(2, 98, cur + (e.key === 'ArrowLeft' ? -5 : 5)))
-        e.preventDefault()
-      }
+      const to = { ArrowLeft: cur - 5, ArrowDown: cur - 5, ArrowRight: cur + 5, ArrowUp: cur + 5, Home: 2, End: 98 }[e.key]
+      if (to === undefined) return
+      touched = true
+      setX(clamp(2, 98, to))
+      e.preventDefault()
     })
+
+    // phones: the first time the slider is on screen, it shows that it can be dragged
+    const sweep = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting || !mobile.matches) return
+      sweep.disconnect()
+      if (touched || motion.reduced) return
+      const o = { x: 50 }
+      gsap.timeline({ delay: 0.6, onUpdate: () => !touched && setX(o.x) })
+        .to(o, { x: 84, duration: 0.8, ease: 'power2.inOut' })
+        .to(o, { x: 18, duration: 1.2, ease: 'power2.inOut' })
+        .to(o, { x: 50, duration: 0.8, ease: 'power2.inOut' })
+    }, { threshold: 0.6 })
+    sweep.observe(box)
 
     // camera path: hold on each layer long enough to read it, glide between them
     const GAP = 1600 // z distance between layers
@@ -269,7 +320,7 @@ export function initRooms({ lenis, lightbox }) {
     }
 
     updaters.push(() => {
-      if (!near(room)) return
+      if (!near(room) || mobile.matches) return
       const q = progressOf(room)
       const cam = camAt(q)
       const wide = innerWidth > 1100
@@ -291,6 +342,7 @@ export function initRooms({ lenis, lightbox }) {
         texts.forEach((t, i) => t.classList.toggle('is-on', i === s))
         rail.forEach((r, i) => {
           r.classList.toggle('is-on', i === s)
+          i === s ? r.setAttribute('aria-current', 'step') : r.removeAttribute('aria-current')
           r.classList.toggle('is-done', i < s)
         })
       }
@@ -320,13 +372,8 @@ export function initRooms({ lenis, lightbox }) {
       })
     }
     setActive(0)
-    updaters.push(() => {
-      if (!near(room)) return
-      const q = progressOf(room)
-      const max = Math.max(0, track.scrollWidth - innerWidth)
-      const x = -max * seg(q, 0.08, 0.94)
-      track.style.transform = `translate3d(${x}px,0,0)`
-      // the film nearest the middle plays on the monitor
+    // the film nearest the middle plays on the monitor
+    const pickCentre = () => {
       let best = 0, bd = Infinity
       cards.forEach((c, i) => {
         const r = c.getBoundingClientRect()
@@ -334,6 +381,15 @@ export function initRooms({ lenis, lightbox }) {
         if (d < bd) (bd = d), (best = i)
       })
       setActive(best)
+    }
+    $(room, '[data-strip]').addEventListener('scroll', () => mobile.matches && pickCentre(), { passive: true })
+    updaters.push(() => {
+      if (!near(room) || mobile.matches) return
+      const q = progressOf(room)
+      const max = Math.max(0, track.scrollWidth - innerWidth)
+      const x = -max * seg(q, 0.08, 0.94)
+      track.style.transform = `translate3d(${x}px,0,0)`
+      pickCentre()
     })
   }
 
@@ -345,9 +401,11 @@ export function initRooms({ lenis, lightbox }) {
     const cols = labTracks.map((ids) => {
       const col = h('<div class="lab__col"></div>')
       // doubled so the column never runs out while it drifts
-      ;[...ids, ...ids].forEach((id) => {
+      ;[...ids, ...ids].forEach((id, i) => {
         const c = card(byId[id], { wide: false })
         c.addEventListener('click', () => play(id))
+        // the second copy is only there for the drift: hide it from keyboard and screen readers
+        if (i >= ids.length) c.inert = true
         col.append(c)
       })
       wrap.append(col)
@@ -367,7 +425,7 @@ export function initRooms({ lenis, lightbox }) {
         watching = on
         room.querySelectorAll('.card').forEach((c) => (on ? io.observe(c) : (io.unobserve(c), c._idle())))
       }
-      if (!on) return
+      if (!on || mobile.matches) return
       const q = progressOf(room)
       cols.forEach((c, i) => {
         const dir = i % 2 ? 1 : -1
@@ -383,14 +441,17 @@ export function initRooms({ lenis, lightbox }) {
     const bg = $(room, '[data-sets-bg]')
     const picker = $(room, '[data-sets]')
     const colors = { teal: '#18b7c4', blush: '#f4a07c', forest: '#5fae3a', gold: '#d9a441', indigo: '#243a86', sage: '#9fc3b8' }
-    const imgs = sets.map(([id]) => {
-      const i = h(`<img src="/studio/set-${id}.webp" alt="" loading="lazy" decoding="async" />`)
+    // ~700w for phones, full size for wide screens; the photo spans about half the viewport on desktop
+    const photo = (name, alt) => h(`<img src="/studio/${name}.webp" srcset="/studio/${name}-sm.webp 700w, /studio/${name}.webp 1800w"
+      sizes="(max-width: 1100px) 100vw, 55vw" alt="${alt}" loading="lazy" decoding="async" />`)
+    const imgs = sets.map(([id, name]) => {
+      const i = photo(`set-${id}`, `The ${name} set in the Story Room`)
       bg.append(i)
       return i
     })
-    const live = h('<img src="/studio/live-1.webp" alt="" decoding="async" />')
+    const live = photo('live-1', 'A podcast being recorded in the Story Room')
     bg.prepend(live)
-    let chosen = -1, touched = false
+    let chosen = null, touched = false
     const btns = sets.map(([id, name], i) => {
       const b = h(`<button type="button" role="radio" aria-checked="false" style="--c:${colors[id]}"><i></i>${name}</button>`)
       b.addEventListener('click', () => {
@@ -403,14 +464,31 @@ export function initRooms({ lenis, lightbox }) {
     function choose(i) {
       if (i === chosen) return
       chosen = i
-      live.classList.toggle('is-on', i < 0)
-      imgs.forEach((im, j) => im.classList.toggle('is-on', j === i))
-      btns.forEach((b, j) => b.setAttribute('aria-checked', String(j === i)))
+      // only the photo on show is announced
+      ;[live, ...imgs].forEach((im, j) => {
+        const on = j - 1 === i
+        im.classList.toggle('is-on', on)
+        im.toggleAttribute('aria-hidden', !on)
+      })
+      btns.forEach((b, j) => {
+        b.setAttribute('aria-checked', String(j === i))
+        b.tabIndex = j === Math.max(0, i) ? 0 : -1
+      })
     }
+    // radio group keyboard pattern: one tab stop, arrows move the choice
+    picker.addEventListener('keydown', (e) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]
+      if (!step) return
+      e.preventDefault()
+      touched = true
+      const next = chosen < 0 ? (step > 0 ? 0 : btns.length - 1) : (chosen + step + btns.length) % btns.length
+      choose(next)
+      btns[next].focus()
+    })
     choose(-1)
     $(room, '[data-pod]').innerHTML = podcastSteps.map(([k, d], i) => `<li><b>${k}</b><span>${d}</span></li>`).join('')
     updaters.push(() => {
-      if (!near(room) || touched) return
+      if (!near(room) || touched || mobile.matches) return
       const q = progressOf(room)
       choose(q < 0.2 ? -1 : Math.min(sets.length - 1, Math.floor(((q - 0.2) / 0.8) * sets.length)))
     })

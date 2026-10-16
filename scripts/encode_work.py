@@ -14,7 +14,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-SRC = Path(r"E:/Download projects/Katha Frames Company Profile & Portfolio")
+SRC = Path(r"E:/Archive/Download projects/Katha Frames Company Profile & Portfolio")
 AI = SRC / "AI ｜ 2D Animation ｜ 2.5D Animation ｜ 3D Animation"
 UGC = SRC / "UGC Videos ｜ Digital Ads ｜ Social Media Reels"
 OUT = Path(__file__).resolve().parent.parent / "public" / "work"

@@ -94,3 +94,13 @@ export const contact = {
   address: '5th Floor, BTM 1st Stage, Outer Ring Road, Bengaluru 560029',
   cities: 'Bengaluru · Hyderabad · Dubai',
 }
+
+// Where quote requests go. Paste a form endpoint to receive leads by email:
+//   Formspree  -> endpoint: 'https://formspree.io/f/<id>'
+//   Web3Forms  -> endpoint: 'https://api.web3forms.com/submit', accessKey: '<key>'
+// While endpoint is empty, the form hands the brief to WhatsApp instead.
+export const leads = {
+  endpoint: '',
+  accessKey: '',
+  needs: ['TV commercial', 'Brand film', 'Animation / AI film', 'Podcast', 'Something else'],
+}

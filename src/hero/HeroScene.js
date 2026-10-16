@@ -254,6 +254,11 @@ export class HeroScene {
   }
 
   update() {
+    // no layout until the canvas has a size (hidden or background tab at load)
+    if (!this.visX) {
+      this.resize()
+      if (!this.visX) return { el: 0, p: this.progress }
+    }
     const rawDt = this.clock.getDelta()
     this.adapt(rawDt)
     const dt = Math.min(rawDt, 0.05)
