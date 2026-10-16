@@ -30,7 +30,7 @@ gsap.ticker.add((t) => lenis.raf(t * 1000))
 gsap.ticker.lagSmoothing(0)
 
 // In-page links scroll smoothly and also move keyboard focus to the target,
-// so the skip link and the menu leave screen-reader users where they landed.
+// so the skip link leaves screen-reader users where they landed.
 // Links marked data-lead open the quote popup instead (leads.js).
 document.querySelectorAll('a[href^="#"]:not([data-lead])').forEach((a) =>
   a.addEventListener('click', (e) => {
@@ -38,41 +38,15 @@ document.querySelectorAll('a[href^="#"]:not([data-lead])').forEach((a) =>
     const target = id.length > 1 && document.querySelector(id)
     if (!target) return
     e.preventDefault()
-    closeMenu(false)
     lenis.scrollTo(id === '#top' ? 0 : id, { duration: motion.reduced ? 0.01 : 1.6, force: true })
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1')
     target.focus({ preventScroll: true })
   }),
 )
 
-// ---------- menu (below 1100px): a modal layer, everything behind it is inert
-const menu = document.getElementById('menu')
-const menuOpen = document.querySelector('[data-menu-open]')
-const behind = [document.querySelector('.nav'), document.querySelector('main')]
-function openMenu() {
-  menu.hidden = false
-  menuOpen.setAttribute('aria-expanded', 'true')
-  behind.forEach((el) => (el.inert = true))
-  lenis.stop()
-  menu.querySelector('a').focus()
-}
-function closeMenu(restoreFocus = true) {
-  if (menu.hidden) return
-  menu.hidden = true
-  menuOpen.setAttribute('aria-expanded', 'false')
-  behind.forEach((el) => (el.inert = false))
-  lenis.start()
-  if (restoreFocus) menuOpen.focus()
-}
-menuOpen.addEventListener('click', openMenu)
-menu.querySelector('[data-menu-close]').addEventListener('click', () => closeMenu())
-addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeMenu()
-})
-
 const lightbox = createLightbox(lenis)
 const updateRooms = initRooms({ lenis, lightbox })
-initLeads({ lenis, beforeOpen: () => closeMenu(false) })
+initLeads({ lenis })
 initReveal()
 
 const root = document.documentElement
@@ -80,6 +54,7 @@ const rooms = [...document.querySelectorAll('[data-room]')]
 const navLinks = [...document.querySelectorAll('.nav__links a')]
 const parallaxEls = [...document.querySelectorAll('[data-parallax]')]
 const progressBar = document.querySelector('[data-progress]')
+const hero = document.getElementById('hero')
 
 motion.onChange((reduced) => {
   lenis.options.lerp = reduced ? 1 : smoothLerp
@@ -112,6 +87,8 @@ function tick() {
     return b.top <= 60 && b.bottom > 60
   })
   root.classList.toggle('is-light', light)
+  // phones: the header belongs to the hero; past it, the bottom bar carries the action
+  root.classList.toggle('past-hero', hero.getBoundingClientRect().bottom < 80)
   navLinks.forEach((a) => {
     const on = !!here && a.getAttribute('href') === `#${here.id}`
     if (a.classList.contains('is-here') === on) return

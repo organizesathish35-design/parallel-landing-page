@@ -195,7 +195,7 @@ export function initLeads({ lenis, beforeOpen = () => {} }) {
     document.addEventListener('mouseout', (e) => {
       if (e.relatedTarget || e.clientY > 0 || performance.now() < armedAt) return
       if (store.get(EXIT) || store.get(SENT) || dialog.open) return
-      if (!document.getElementById('lb').hidden || !document.getElementById('menu').hidden) return
+      if (!document.getElementById('lb').hidden) return
       store.set(EXIT, '1')
       open('exit-intent')
     })

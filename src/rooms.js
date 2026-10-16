@@ -152,8 +152,11 @@ export function initRooms({ lenis, lightbox }) {
     // credits ride directly beneath it, so the pinned screen never has dead space
     function phoneLayout(W, H, g) {
       const w0 = W - 2 * g, w1 = W, h1 = (W * 9) / 16
-      const y0 = head.offsetTop + head.offsetHeight + 24
       const bar = 72 // the quote bar along the bottom
+      // the heading and the small player start as one group, centred above the bar
+      const top = Math.max(40, (H - bar - (head.offsetHeight + 24 + (w0 * 9) / 16)) / 2)
+      head.style.top = `${top.toFixed(1)}px`
+      const y0 = top + head.offsetHeight + 24
       const gap = 28 // player to credits
       const group = h1 + gap + reel.offsetHeight
       const y1 = Math.max(72, (H - bar - group) / 2 + 8)
@@ -171,6 +174,7 @@ export function initRooms({ lenis, lightbox }) {
       let w0, x0, y0, w1, x1, y1
       if (mobile.matches) ({ w0, x0, y0, w1, x1, y1 } = phoneLayout(W, H, g))
       else {
+        head.style.top = ''
         // start: beside the heading (wide) or under it (tall)
         w0 = wide ? W * 0.44 : W - 2 * g
         x0 = wide ? W - g - w0 : g
@@ -193,7 +197,7 @@ export function initRooms({ lenis, lightbox }) {
     })
   }
 
-  // ================= HOW WE MAKE A COMMERCIAL — a fly-through, far layers drift slower =================
+  // ================= HOW WE MAKE A TVC — a fly-through, far layers drift slower =================
   {
     const room = document.getElementById('process')
     const depth = $(room, '[data-depth]')

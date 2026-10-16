@@ -555,40 +555,15 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
 /* ---------- nav actions ---------- */
 .nav__right { display: flex; align-items: center; gap: var(--s-4); }
 
-/* ---------- menu (below 1100px) ---------- */
-.nav__menu {
-  display: none; min-height: 44px; padding: 0 var(--s-1);
-  font-size: var(--fs-label); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-}
-.menu {
-  position: fixed; inset: 0; z-index: 95; background: var(--paper); color: var(--ink);
-  display: flex; flex-direction: column; padding: var(--s-9) var(--gutter) var(--s-7);
-  animation: menu-in var(--dur-base) var(--ease);
-}
-.menu[hidden] { display: none; }
-@keyframes menu-in { from { opacity: 0; } }
-.menu__close {
-  position: absolute; top: var(--s-4); right: var(--gutter); min-height: 44px; padding: 0 var(--s-1);
-  font-size: var(--fs-label); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-}
-.menu__list { display: grid; gap: var(--s-2); }
-.menu__list a {
-  display: block; padding: var(--s-2) 0;
-  font-family: var(--display); font-weight: 600; text-transform: uppercase;
-  font-size: clamp(32px, 9vw, 56px); line-height: 1; letter-spacing: -0.03em;
-}
-.menu__list a:hover { color: var(--ink-60); }
-.menu__foot { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
-
 @media (max-width: 1300px) {
   .nav__links { gap: 22px; }
-}
-@media (max-width: 1100px) {
-  .nav__menu { display: block; }
 }
 @media (max-width: 720px) {
   .nav__right { gap: var(--s-3); }
   .nav__right .btn { display: none; } /* the phone bar carries the action */
+  .nav { transition: color var(--dur-base), background-color var(--dur-base), transform var(--dur-base) var(--ease-standard), opacity var(--dur-base); }
+  html.past-hero .nav { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+  html.past-hero .nav > * { pointer-events: none; }
   .nav__logo { width: 96px; }
 }
 
@@ -753,7 +728,7 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .room:not(.room--screening) .room__stage, .process__stage {
     position: relative; height: auto; overflow: visible;
     display: flex; flex-direction: column; gap: var(--s-5);
-    padding: 80px var(--gutter) var(--s-6);
+    padding: var(--s-7) var(--gutter) var(--s-5); /* no header past the hero, so no clearance needed */
   }
   .room:not(.room--screening) .room__ui { display: contents; padding: 0; }
   .room__ui > *, .process__copy > *, .ptexts > * { pointer-events: auto; }
@@ -814,6 +789,14 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
 
   /* podcast */
   .story__copy .lede { display: block; }
+
+  /* faq + contact: same rhythm as the sections above */
+  .faq { padding: var(--s-7) var(--gutter); }
+  .faq summary { padding: var(--s-4) 0; }
+  .faq details p { padding-bottom: var(--s-4); }
+  .faq__head .btn { margin-top: var(--s-5); }
+  .contact-sec { padding-top: var(--s-7); }
+  .foot { margin-top: var(--s-7); }
 }
 
 /* ---------- phones: things arrive as they scroll in (reveal.js adds .rv, then removes it) ---------- */
