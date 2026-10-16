@@ -783,7 +783,9 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .room__dim--lab { display: none; }
   .lab__cols { order: 2; transform: none; display: flex; align-items: flex-start; gap: var(--s-3); padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); }
   .lab__col, .lab__col:nth-child(3), .lab__col:nth-child(4) { display: contents; }
-  .lab__col .card { flex: none; width: 42vw; scroll-snap-align: start; }
+  /* one shared height; width follows each film's own ratio so nothing crops or staggers */
+  .lab__col .card { flex: none; width: calc(48vw * var(--car, 9 / 16)); scroll-snap-align: start; }
+  .lab__col .card__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lab__col .card[inert] { display: none; }
   .room__head--lab .lede { font-size: 15px; }
 
