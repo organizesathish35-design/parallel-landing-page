@@ -113,7 +113,7 @@ mark { background: var(--accent); color: var(--black); padding: 0 3px; }
 }
 .nav > * { pointer-events: auto; }
 html.is-light .nav { color: var(--ink); background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(10px); }
-.nav__logo { display: block; width: 132px; }
+.nav__logo { display: block; width: 180px; }
 .nav__logo .wordmark { width: 100%; height: auto; fill: currentColor; }
 .nav__logo .wordmark .glyph--b { fill: var(--accent); }
 html.is-light .nav__logo .wordmark .glyph--b { fill: var(--ink); }
@@ -484,7 +484,7 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   :root { --gutter: 22px; }
   .nav { padding: 16px var(--gutter); }
   .nav { backdrop-filter: none; }
-  .nav__logo { width: 110px; }
+  .nav__logo { width: 156px; }
   .nav__right .btn { padding: 10px 12px 10px 14px; letter-spacing: 0.14em; }
   .hero { align-items: flex-start; }
   .hero__ui { padding: 88px var(--gutter) var(--s-6); }
@@ -564,7 +564,7 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   .nav { transition: color var(--dur-base), background-color var(--dur-base), transform var(--dur-base) var(--ease-standard), opacity var(--dur-base); }
   html.past-hero .nav { transform: translateY(-100%); opacity: 0; pointer-events: none; }
   html.past-hero .nav > * { pointer-events: none; }
-  .nav__logo { width: 96px; }
+  .nav__logo { width: 132px; }
 }
 
 /* ---------- reduced motion: motion.js sets this from the OS setting ---------- */
