@@ -818,9 +818,8 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .rv--row { transform: translateX(32px); }
   .rv.is-in, .rv:focus-within { opacity: 1; transform: none; clip-path: inset(0); }
 
-  /* the highlighter runs over the three beats once the page is on screen */
-  .script p { transition: --hl 0.9s var(--ease) var(--hl-d, 0ms); }
-  .script.is-lit p { --hl: 1; }
+  /* the beat labels sit inline after the highlighted line (reveal.js drives --hl on scroll) */
+  .script .note { display: inline-block; position: static; margin-left: 6px; vertical-align: 1px; font-size: 9px; letter-spacing: 0.16em; }
 }
 
 /* the hero drifts back as you scroll past it (where the browser supports scroll timelines) */

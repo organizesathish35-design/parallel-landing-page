@@ -70,15 +70,21 @@ export function initReveal() {
   mobile.addEventListener('change', (e) => (e.matches ? init() : showAll()))
   motion.onChange((reduced) => reduced && showAll())
 
-  // the script page: the highlighter runs over the three beats, one after another
-  const script = document.querySelector('.script')
-  const lit = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting || !mobile.matches) return
-    lit.disconnect()
-    if (!motion.reduced) script.querySelectorAll('p:has(mark)').forEach((p, i) => p.style.setProperty('--hl-d', `${400 + i * 450}ms`))
-    script.classList.add('is-lit')
-  }, { threshold: 0.45 })
-  lit.observe(script)
+  // the script page: as you scroll, the highlighter sweeps each beat while it
+  // crosses the lower part of the screen, and its label slides in (as on desktop)
+  const beats = [...document.querySelectorAll('.script p:has(mark)')]
+  let queued = false
+  const sweep = () => {
+    queued = false
+    if (!mobile.matches) return
+    const vh = innerHeight
+    beats.forEach((p) => {
+      const hl = motion.reduced ? 1 : Math.min(1, Math.max(0, (vh * 0.85 - p.getBoundingClientRect().top) / (vh * 0.25)))
+      p.style.setProperty('--hl', hl.toFixed(3))
+    })
+  }
+  addEventListener('scroll', () => queued || (queued = true, requestAnimationFrame(sweep)), { passive: true })
+  sweep()
 
   // a page opened in a hidden tab has no width yet: decide once it has one
   if (innerWidth) init()
