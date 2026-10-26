@@ -1,14 +1,23 @@
-// PARALLEL wordmark, rebuilt as geometric paths (cap height = 100 units).
-// The LL pair becomes two slanted bars - the second one carries the lime signal.
+// PARALLEL wordmark, traced from the brand artwork as geometric paths (cap height = 100 units).
+// The LL pair is two slanted bars that rise above and drop below the caps - the second carries the lime signal.
+// P / R: stem plus a bowl (width w, height h, top/bottom corner radii) and a counter with a round right end
+const BOWL = (w, h, top, bot, cTop, cBot, cRight) => {
+  const r = (cBot - cTop) / 2
+  return `M0 0H${w - top}A${top} ${top} 0 0 1 ${w} ${top}A${bot} ${bot} 0 0 1 ${w - bot} ${h}H22V100H0Z ` +
+    `M22 ${cTop}H${cRight - r}A${r} ${r} 0 0 1 ${cRight - r} ${cBot}H22Z`
+}
+const LAMBDA = 'M0 100L74 0L149 100H124.5L74 33L24.5 100Z'
+const BAR = 'M62 -31.5H92L30 130.5H0Z'
+
 const GLYPHS = [
-  { x: 0, d: ['M0 0H44A31 31 0 0 1 44 62H15V100H0Z M15 15H44A16 16 0 0 1 44 47H15Z'] },            // P
-  { x: 99, d: ['M0 100L37 0H53L90 100H73L45 22L17 100Z'] },                                            // A (Λ)
-  { x: 213, d: ['M0 0H44A31 31 0 0 1 44 62H15V100H0Z M15 15H44A16 16 0 0 1 44 47H15Z', 'M38 56H56L78 100H60Z'] }, // R
-  { x: 316, d: ['M0 100L37 0H53L90 100H73L45 22L17 100Z'] },                                           // A (Λ)
-  { x: 424, d: ['M31 0H53L22 100H0Z'], bar: 'a' },                                                     // /
-  { x: 458, d: ['M31 0H53L22 100H0Z'], bar: 'b' },                                                     // /
-  { x: 545, d: ['M0 0H64V15H15V42.5H58V57.5H15V85H64V100H0Z'] },                                       // E
-  { x: 632, d: ['M0 0H15V85H60V100H0Z'] },                                                             // L
+  { x: 0, d: [BOWL(111, 71, 38, 33, 19.5, 52.5, 88.5)] },                          // P
+  { x: 138, d: [LAMBDA] },                                                          // A (Λ)
+  { x: 326, d: [BOWL(107, 67, 36, 31, 18.5, 48.5, 86), 'M50 60H76L114.5 100H89Z'] }, // R
+  { x: 470, d: [LAMBDA] },                                                          // A (Λ)
+  { x: 648, d: [BAR], bar: 'a' },                                                   // /
+  { x: 706, d: [BAR], bar: 'b' },                                                   // /
+  { x: 836, d: ['M0 0H107V19.5H22.5V39.5H103.5V58H22.5V80H107V100H0Z'] },           // E
+  { x: 1005, d: ['M0 0H22V80H110V100H0Z'] },                                        // L
 ]
 
 export function wordmark({ className = '', title = 'Parallel' } = {}) {
@@ -17,5 +26,5 @@ export function wordmark({ className = '', title = 'Parallel' } = {}) {
     const paths = d.map((p) => `<path d="${p}" fill-rule="evenodd"/>`).join('')
     return `<g class="${cls}" transform="translate(${x} 0)"><g class="glyph__inner">${paths}</g></g>`
   }).join('')
-  return `<svg class="wordmark ${className}" viewBox="0 0 692 100" role="img" aria-label="${title}"><title>${title}</title>${g}</svg>`
+  return `<svg class="wordmark ${className}" viewBox="0 -32 1115 163" role="img" aria-label="${title}"><title>${title}</title>${g}</svg>`
 }

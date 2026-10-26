@@ -61,8 +61,8 @@ motion.onChange((reduced) => {
 function card(v, { wide = true } = {}) {
   const m = media(v.id)
   const el = h(`
-    <button class="card" type="button" data-id="${v.id}">
-      <span class="card__media" style="--car:${v.w}/${v.h}">
+    <button class="card" type="button" data-id="${v.id}" style="--car:${v.w}/${v.h}">
+      <span class="card__media">
         <img src="${m.thumb}" alt="" loading="lazy" decoding="async" />
         <video muted playsinline loop preload="none"></video>
         <span class="card__play" aria-hidden="true">▶</span>

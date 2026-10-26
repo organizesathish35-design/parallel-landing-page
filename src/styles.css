@@ -113,7 +113,7 @@ mark { background: var(--accent); color: var(--black); padding: 0 3px; }
 }
 .nav > * { pointer-events: auto; }
 html.is-light .nav { color: var(--ink); background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(10px); }
-.nav__logo { display: block; width: 132px; }
+.nav__logo { display: block; width: 180px; }
 .nav__logo .wordmark { width: 100%; height: auto; fill: currentColor; }
 .nav__logo .wordmark .glyph--b { fill: var(--accent); }
 html.is-light .nav__logo .wordmark .glyph--b { fill: var(--ink); }
@@ -512,7 +512,7 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   :root { --gutter: 22px; }
   .nav { padding: 16px var(--gutter); }
   .nav { backdrop-filter: none; }
-  .nav__logo { width: 110px; }
+  .nav__logo { width: 156px; }
   .nav__right .btn { padding: 10px 12px 10px 14px; letter-spacing: 0.14em; }
   .hero { align-items: flex-start; }
   .hero__ui { padding: 88px var(--gutter) var(--s-6); }
@@ -592,7 +592,7 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   .nav { transition: color var(--dur-base), background-color var(--dur-base), transform var(--dur-base) var(--ease-standard), opacity var(--dur-base); }
   html.past-hero .nav { transform: translateY(-100%); opacity: 0; pointer-events: none; }
   html.past-hero .nav > * { pointer-events: none; }
-  .nav__logo { width: 96px; }
+  .nav__logo { width: 132px; }
 }
 
 /* ---------- reduced motion: motion.js sets this from the OS setting ---------- */
@@ -811,7 +811,9 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .room__dim--lab { display: none; }
   .lab__cols { order: 2; transform: none; display: flex; align-items: flex-start; gap: var(--s-3); padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); }
   .lab__col, .lab__col:nth-child(3), .lab__col:nth-child(4) { display: contents; }
-  .lab__col .card { flex: none; width: 42vw; scroll-snap-align: start; }
+  /* one shared height; width follows each film's own ratio so nothing crops or staggers */
+  .lab__col .card { flex: none; width: calc(48vw * var(--car, 9 / 16)); scroll-snap-align: start; }
+  .lab__col .card__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lab__col .card[inert] { display: none; }
   .room__head--lab .lede { font-size: 15px; }
 
@@ -844,9 +846,8 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .rv--row { transform: translateX(32px); }
   .rv.is-in, .rv:focus-within { opacity: 1; transform: none; clip-path: inset(0); }
 
-  /* the highlighter runs over the three beats once the page is on screen */
-  .script p { transition: --hl 0.9s var(--ease) var(--hl-d, 0ms); }
-  .script.is-lit p { --hl: 1; }
+  /* the beat labels sit inline after the highlighted line (reveal.js drives --hl on scroll) */
+  .script .note { display: inline-block; position: static; margin-left: 6px; vertical-align: 1px; font-size: 9px; letter-spacing: 0.16em; }
 }
 
 /* the hero drifts back as you scroll past it (where the browser supports scroll timelines) */
