@@ -197,7 +197,7 @@ export function initRooms({ lenis, lightbox }) {
     })
   }
 
-  // ================= HOW WE MAKE A TVC — a fly-through, far layers drift slower =================
+  // ================= HOW WE MAKE A COMMERCIAL — a fly-through, far layers drift slower =================
   {
     const room = document.getElementById('process')
     const depth = $(room, '[data-depth]')

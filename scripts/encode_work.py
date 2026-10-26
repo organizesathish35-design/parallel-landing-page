@@ -42,6 +42,8 @@ VIDEOS = [
     ("mockit", AI / "AI-Powered Content Creation", "MockIT Hub*", "ai", "Try It Free", "MockIT Hub"),
     ("mealomart-food", AI / "AI-Powered Content Creation", "Reels food*", "ai", "Fresh to Your Door", "MealoMart"),
     ("interior", AI / "AI-Powered Content Creation", "interior design*", "ai", "Spaces, Imagined", "Interior design · AI film"),
+    # from Google Drive (info@kathaframes.com), saved into AI Videos; the site loop is 20-28 s, cut by hand
+    ("madroidix", SRC / "AI Videos", "Madroidix*", "ai", "From Idea to App", "Madroidix"),
     # AI & animation — horizontal
     ("tiger-podcast", SRC / "AI Videos", "tiger podcast*", "ai", "The Wild Starts Here", "AI film"),
     ("ai-hospital", AI / "AI-Powered Content Creation", "AI-HOSPITAL*", "ai", "Care, Reimagined", "Hospital · AI ad film"),

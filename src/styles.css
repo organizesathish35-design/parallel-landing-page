@@ -156,14 +156,32 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
 /* A shared, opt-in depth layer used by the scroll pass in main.js. */
 [data-parallax] { translate: 0 var(--parallax-y, 0px); will-change: translate; }
 
-/* ---------- hero: one screen, the photo stays still, the words and the action lead ---------- */
-.hero {
-  position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden;
+/* ---------- hero: a tall section with a sticky stage. The first scroll plays one day over the
+   tower; the rest walks the camera into the lit office floor, then the page goes white. ---------- */
+.hero { position: relative; height: 240vh; color: var(--bone); background: var(--black); }
+.hero__stage {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
   display: flex; align-items: center;
   /* dusk sky behind the cut-out photos */
   background: linear-gradient(180deg, #120e1f 0%, #241a3a 38%, #3b2a52 60%, #1a1424 100%);
-  color: var(--bone);
 }
+.hero__glass {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(255, 236, 205, 0.95), rgba(255, 196, 130, 0.6) 55%, rgba(255, 255, 255, 0.9) 100%);
+}
+.hero__white { position: absolute; inset: 0; z-index: 2; background: var(--paper); opacity: 0; pointer-events: none; }
+.scrollcue {
+  position: absolute; left: 50%; bottom: 30px; z-index: 1; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone-60);
+}
+.scrollcue__bar { width: 1px; height: 44px; background: rgba(242, 240, 234, 0.3); position: relative; overflow: hidden; }
+.scrollcue__bar::after {
+  content: ''; position: absolute; left: 0; top: -40%; width: 100%; height: 40%;
+  background: var(--accent); animation: cue 2s var(--ease) infinite;
+}
+@keyframes cue { to { top: 100%; } }
+.reduce-motion .scrollcue__bar::after { animation: none; }
 .hero__poster { position: absolute; inset: 0; pointer-events: none; }
 .hero__poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
 /* one slow pass of depth, never a loop */
@@ -514,7 +532,9 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   .nav { backdrop-filter: none; }
   .nav__logo { width: 156px; }
   .nav__right .btn { padding: 10px 12px 10px 14px; letter-spacing: 0.14em; }
-  .hero { align-items: flex-start; }
+  .hero { height: 220vh; }
+  .hero__stage { align-items: flex-start; }
+  .scrollcue { display: none; }
   .hero__ui { padding: 88px var(--gutter) var(--s-6); }
   .hero__poster img { object-position: 74% 50%; }
   .hero__shade { background: linear-gradient(180deg, rgba(11, 11, 13, 0.92) 0%, rgba(11, 11, 13, 0.82) 50%, rgba(11, 11, 13, 0.2) 82%, rgba(11, 11, 13, 0.55) 100%); }
@@ -850,13 +870,3 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .script .note { display: inline-block; position: static; margin-left: 6px; vertical-align: 1px; font-size: 9px; letter-spacing: 0.16em; }
 }
 
-/* the hero drifts back as you scroll past it (where the browser supports scroll timelines) */
-@supports (animation-timeline: view()) {
-  @media (max-width: 720px) {
-    .hero__ui { animation: hero-leave linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
-    .hero__poster, .gl { animation: poster-leave linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
-  }
-}
-@keyframes hero-leave { to { opacity: 0.15; transform: translateY(-48px); } }
-@keyframes poster-leave { to { transform: translateY(18%) scale(1.06); } }
-.reduce-motion .hero__ui, .reduce-motion .hero__poster, .reduce-motion .gl { animation: none !important; }

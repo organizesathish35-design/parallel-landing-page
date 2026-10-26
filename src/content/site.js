@@ -13,15 +13,15 @@ export const media = (id) => ({
   thumb: `/work/thumb/${id}.jpg`,
 })
 
-// Room 01 — the TVCs that went on air
+// Room 01 — the commercials that went on air
 export const onAir = [
-  { id: 'zestbot-tvc', kind: 'TVC', line: 'A kirana owner, a supply truck and a superhero landing.' },
+  { id: 'zestbot-tvc', kind: 'TV commercial', line: 'A kirana owner, a supply truck and a superhero landing.' },
   { id: 'isl', kind: 'Ad film · JioCinema × Sports18', line: 'Fans, a stadium and the feeling of match day.' },
   { id: 'brand-blue', kind: 'Ad film', line: 'A walk through a clothing store that makes you want to step in.' },
 ]
 
 
-// Room 02 — the method, shown on the ZestBot TVC
+// Room 02 — the method, shown on the ZestBot commercial
 export const script = [
   { t: 'act', text: 'A supply truck arrives like every morning. The truck boy starts unloading extra boxes.' },
   { t: 'who', text: 'Ravanna' },
@@ -60,14 +60,14 @@ export const crew = [
 // Room 04 — films
 export const films = ['dollars', 'mithra', 'di-files', 'harmone', 'merino']
 export const filmFormats = [
-  'TVCs', 'Video productions', 'Corporate films', 'UGC videos', 'Brand films',
+  'Video production', 'Commercials', 'Corporate films', 'UGC videos', 'Brand films',
   'Feature movies', 'Short films', 'Music videos', 'Web series', 'Documentaries',
 ]
 
 // Room 05 — AI & animation, in parallel tracks
 export const labTracks = [
-  ['fennec-cricket', 'led-3d', 'audi-childrens-day', 'holadrive'],
-  ['zestbot-ai', 'tiger-podcast', 'wellness-shampoo', 'fortinet'],
+  ['madroidix', 'tiger-podcast', 'audi-childrens-day', 'holadrive', 'fennec-cricket'],
+  ['zestbot-ai', 'led-3d', 'wellness-shampoo', 'fortinet'],
   ['atticply', 'ai-hospital', 'mockit', 'deebee'],
   ['interior', 'hk-vitals', 'mealomart-food', 'invictus'],
 ]
@@ -103,7 +103,7 @@ export const leads = {
   endpoint: '',
   accessKey: '',
   needs: [
-    'TVC', 'Ad film', 'Corporate film', 'UGC videos', 'Brand film', 'Video production',
+    'Video production', 'Commercial', 'Corporate film', 'UGC videos', 'Brand film',
     'Real-estate film', 'Music video', 'Short film', 'Web series', 'Documentary', 'Feature film',
     '2D / 3D animation', 'AI film', 'Podcast', 'Something else',
   ],

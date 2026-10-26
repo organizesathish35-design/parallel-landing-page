@@ -22,7 +22,7 @@ const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 
 function formHTML(p) {
   const needs = leads.needs
-    .map((n, i) => `<label class="need"><input type="radio" name="need" value="${esc(n)}" id="${p}-need-${i}" /><span>${esc(n)}</span></label>`)
+    .map((n, i) => `<label class="need"><input type="checkbox" name="need" value="${esc(n)}" id="${p}-need-${i}" /><span>${esc(n)}</span></label>`)
     .join('')
   return `
     <form class="lead" novalidate>
@@ -42,7 +42,7 @@ function formHTML(p) {
         <p class="field__err" id="${p}-email-err"></p>
       </div>
       <fieldset class="field">
-        <legend>What do you need? <span class="field__opt">optional</span></legend>
+        <legend>What do you need? <span class="field__opt">pick as many as you like</span></legend>
         <div class="needs">${needs}</div>
       </fieldset>
       <div class="field">
@@ -100,7 +100,9 @@ function mount(el, source) {
       form.elements[bad[0]].focus()
       return
     }
-    const data = Object.fromEntries(new FormData(form))
+    const fd = new FormData(form)
+    const data = Object.fromEntries(fd)
+    data.need = fd.getAll('need').join(', ') // several can be ticked
     delete data.website
     const lead = {
       ...data,
