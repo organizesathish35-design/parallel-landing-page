@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Commercial Production in Bengaluru | PARALLEL</title>
-    <meta name="description" content="TV commercials for brands, made by one Bengaluru crew: script, storyboard, shoot and post in-house, in 4 languages. On air for ZestBot, ISL and Brand Blue." />
+    <title>TVC & Video Production in Bengaluru | PARALLEL</title>
+    <meta name="description" content="TVCs, corporate films and UGC videos for brands, made by one Bengaluru crew: script, storyboard, shoot and post in-house, in 4 languages. On air for ZestBot, ISL and Brand Blue." />
     <meta name="theme-color" content="#0b0b0d" />
     <!-- shared links (WhatsApp, LinkedIn, Slack) should explain themselves out of context -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="PARALLEL" />
-    <meta property="og:title" content="PARALLEL — TV commercials people remember" />
-    <meta property="og:description" content="One Bengaluru crew writes, storyboards, shoots and finishes your TV commercial. Tell us about your launch and get an idea, a plan and a budget." />
+    <meta property="og:title" content="PARALLEL — TVCs people remember" />
+    <meta property="og:description" content="One Bengaluru crew writes, storyboards, shoots and finishes your TVC. Tell us about your launch and get an idea, a plan and a budget." />
     <meta property="og:image" content="/hero/city.webp" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,31 +30,14 @@
         <a href="#edit">Films</a>
         <a href="#lab">Animation</a>
         <a href="#story-room">Podcast</a>
+        <a href="#services">Services</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav__right">
         <a class="btn btn--accent" href="#contact" data-lead="nav"><span>Get a quote</span><i aria-hidden="true">→</i></a>
-        <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>Menu</button>
       </div>
       <span class="progress" data-progress aria-hidden="true"></span>
     </header>
-
-    <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
-      <button class="menu__close" type="button" data-menu-close>Close</button>
-      <nav aria-label="Sections">
-        <ol class="menu__list">
-          <li><a href="#screening">Work</a></li>
-          <li><a href="#process">How we work</a></li>
-          <li><a href="#edit">Films</a></li>
-          <li><a href="#lab">Animation</a></li>
-          <li><a href="#story-room">Podcast</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ol>
-      </nav>
-      <div class="menu__foot">
-        <a class="btn btn--accent" href="#contact" data-lead="menu"><span>Get a quote</span><i aria-hidden="true">→</i></a>
-      </div>
-    </div>
 
     <main id="top">
       <!-- ============ HERO — one screen: who we are, what we make, the next step ============ -->
@@ -63,11 +46,13 @@
           <img class="hero__city" src="/hero/city.webp" alt="" width="1686" height="933" decoding="async" />
           <img class="hero__tower" src="/hero/building.webp" alt="" width="1686" height="933" fetchpriority="high" />
         </div>
+        <!-- the living version of the same photo: one day passes over the tower (hero/HeroScene.js) -->
+        <canvas class="gl" id="gl" aria-hidden="true"></canvas>
         <div class="hero__shade"></div>
         <div class="hero__ui">
-          <p class="eyebrow"><span>TV commercial studio</span><span class="rule"></span><span>Bengaluru · Hyderabad · Dubai</span></p>
+          <p class="eyebrow"><span>TVC &amp; video production studio</span><span class="rule"></span><span>Bengaluru · Hyderabad · Dubai</span></p>
           <div class="intro__mark" data-wordmark aria-hidden="true"></div>
-          <h1 id="hero-h" class="statement"><b>TV commercials</b> that get your brand <b>remembered.</b></h1>
+          <h1 id="hero-h" class="statement"><b>TVCs</b> that get your brand <b>remembered.</b></h1>
           <p class="hero__lede">One crew writes the script, draws every shot, shoots it and finishes it — in English, Kannada, Telugu or Hindi. You brief one team, not five vendors.</p>
           <div class="hero__cta">
             <a class="btn btn--accent btn--lg" href="#contact" data-lead="hero"><span>Get a free quote</span><i aria-hidden="true">→</i></a>
@@ -77,8 +62,8 @@
         </div>
       </section>
 
-      <!-- ============ 01 — TV COMMERCIALS ============ -->
-      <section class="room room--screening" id="screening" data-room="01" data-name="TV commercials" aria-labelledby="screening-h">
+      <!-- ============ 01 — TVCs ============ -->
+      <section class="room room--screening" id="screening" data-room="01" data-name="TVCs" aria-labelledby="screening-h">
         <div class="room__stage">
           <div class="screen" data-screen>
             <video class="screen__v" data-screen-video muted playsinline loop preload="none"></video>
@@ -87,7 +72,7 @@
           </div>
           <div class="room__ui">
             <div class="room__head" data-head data-parallax="-18">
-              <p class="eyebrow"><span>Our TV commercials</span></p>
+              <p class="eyebrow"><span>Our TVCs</span></p>
               <h2 id="screening-h" class="display">Ads we wrote, shot and put on air.</h2>
               <p class="lede"><b>ZestBot</b> needed kirana owners to trust an app. <b>ISL</b> needed match-day feeling for JioCinema × Sports18. <b>Brand Blue</b> needed shoppers through the door. Keep scrolling to play each one.</p>
             </div>
@@ -106,14 +91,14 @@
         </div>
       </section>
 
-      <!-- ============ HOW WE MAKE A COMMERCIAL — one parallax fly-through ============ -->
+      <!-- ============ HOW WE MAKE A TVC — one parallax fly-through ============ -->
       <section class="process" id="process" data-room="02" data-name="How we work" aria-labelledby="process-h">
         <div class="process__stage">
           <div class="depth" data-depth aria-hidden="false">
             <!-- far → near: the finished frame, the shoot, the storyboard wall, the script -->
             <div class="layer layer--screen" data-layer="3">
               <div class="compare" data-compare>
-                <img class="compare__final" data-compare-final alt="Frame from the finished ZestBot commercial" />
+                <img class="compare__final" data-compare-final alt="Frame from the finished ZestBot TVC" />
                 <div class="compare__sketch" data-compare-sketch><img data-compare-ink alt="Storyboard sketch of the same shot" /></div>
                 <div class="compare__handle" data-compare-handle role="slider" tabindex="0" aria-label="Compare the storyboard sketch with the finished frame" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span></span></div>
                 <span class="compare__tag compare__tag--l">Storyboard</span>
@@ -132,14 +117,14 @@
           </div>
 
           <div class="process__copy">
-            <p class="eyebrow"><span>How we make a commercial</span></p>
+            <p class="eyebrow"><span>How we make a TVC</span></p>
             <ol class="rail" data-rail>
               <li>Script</li><li>Storyboard</li><li>Shoot</li><li>On air</li>
             </ol>
             <div class="ptexts">
               <div class="ptext" data-ptext>
                 <h2 id="process-h" class="display">It starts as a script.</h2>
-                <p class="lede">Before we shoot anything, we write it. This is a real page from our <b>ZestBot</b> TV commercial — a kirana shop owner losing customers to online apps, until a superhero lands on his supply truck.</p>
+                <p class="lede">Before we shoot anything, we write it. This is a real page from our <b>ZestBot</b> TVC — a kirana shop owner losing customers to online apps, until a superhero lands on his supply truck.</p>
                 <p class="lede lede--small">Highlighted: the <mark>problem</mark>, the <mark>hero</mark> and the <mark>promise</mark>. Every ad we write has all three, so viewers know what you sell and why it matters.</p>
               </div>
               <div class="ptext" data-ptext>
@@ -168,7 +153,7 @@
           <div class="room__ui">
             <div class="room__head room__head--row" data-parallax="-14">
               <div>
-                <p class="eyebrow"><span>Brand films &amp; short films</span></p>
+                <p class="eyebrow"><span>Brand, corporate &amp; short films</span></p>
                 <h2 id="edit-h" class="display">When your story needs more than an ad slot.</h2>
               </div>
               <div class="formats-wrap">
@@ -176,7 +161,7 @@
                 <ul class="formats" data-formats></ul>
               </div>
             </div>
-            <p class="lede lede--strip">Brand films, real-estate films, music videos and short fiction — made by the same crew as our commercials. Scroll to browse, and click any film to watch it with sound.</p>
+            <p class="lede lede--strip">Brand films, corporate films, UGC videos, real-estate films, music videos and short fiction — made by the same crew as our TVCs. Scroll to browse, and click any film to watch it with sound.</p>
             <div class="strip" data-strip data-parallax="18"><div class="strip__track" data-strip-track></div></div>
           </div>
         </div>
@@ -216,8 +201,65 @@
         </div>
       </section>
 
+      <!-- ============ SERVICES — everything the one crew does, on one page ============ -->
+      <section class="services" id="services" data-room="07" data-name="Services" aria-labelledby="services-h">
+        <div class="services__inner">
+          <div class="services__head">
+            <p class="eyebrow"><span>Services</span></p>
+            <h2 id="services-h" class="display services__h">Ten services. <span>One crew.</span></h2>
+            <p class="lede">We make your brand's content, put it in front of buyers and help you grow. Pick what you need below, or tell us the goal and we'll suggest the mix.</p>
+            <div class="services__cta">
+              <a class="btn btn--accent" href="#contact" data-lead="services"><span>Start a project</span><i aria-hidden="true">→</i></a>
+              <a class="btn btn--ghost" href="#" data-whatsapp target="_blank" rel="noopener"><span>WhatsApp us</span></a>
+            </div>
+          </div>
+          <ul class="services__list">
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/hk-vitals.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Branding &amp; creative</h3><p class="svc__d">Logos, brand kits and the everyday creative that keeps your brand looking like itself, on a hoarding, a reel or a visiting card.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/isl.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Video, film &amp; content production</h3><p class="svc__d">TV commercials, corporate and product films, music videos and reels, written, shot and edited by our own crew.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/studio/live-1-sm.webp" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Podcast, UGC &amp; creator content</h3><p class="svc__d">Video podcasts recorded in our Podcast Room, plus founder stories, UGC and social content that sounds like you.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/holadrive.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">AI, animation &amp; 3D</h3><p class="svc__d">AI films, 2D, 2.5D and 3D animation and explainers, for the shots no camera can get.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/invictus.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Website, app &amp; CRM</h3><p class="svc__d">Business sites, landing pages and stores, mobile apps, CRM and the automation behind them.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/zestbot-ai.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Digital marketing &amp; advertising</h3><p class="svc__d">Paid campaigns on Google, Meta, YouTube and LinkedIn, plus influencer marketing, tracked to every lead.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/ai-hospital.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">SEO &amp; online growth</h3><p class="svc__d">Show up when customers search, on Google, in Maps and in AI answers, from your city to the world.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/studio/gear-sm.webp" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Training &amp; career development</h3><p class="svc__d">Hands-on training in editing, cinematography and agency workflow, on real projects with our crew.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/bts.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Talent, hiring &amp; business support</h3><p class="svc__d">Crew, actors, anchors and teams for hire, vendors coordinated, and the support around them.</p></div>
+            </li>
+            <li class="svc">
+              <img class="svc__img" src="/work/thumb/mithra.jpg" alt="" width="160" height="120" loading="lazy" decoding="async" />
+              <div><h3 class="svc__t">Startup &amp; funding support</h3><p class="svc__d">Founder stories, pitch and investor films, and the campaigns behind a raise.</p></div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!-- ============ FAQ — the questions a brand asks before it briefs us ============ -->
-      <section class="faq" id="faq" data-room="07" data-name="FAQ" aria-labelledby="faq-h">
+      <section class="faq" id="faq" data-room="08" data-name="FAQ" aria-labelledby="faq-h">
         <div class="faq__inner">
           <div class="faq__head">
             <p class="eyebrow"><span>Before you brief us</span></p>
@@ -226,7 +268,7 @@
           </div>
           <div class="faq__list">
             <details>
-              <summary>How much does a TV commercial cost?</summary>
+              <summary>How much does a TVC cost?</summary>
               <p>It depends on the script: locations, cast, shoot days and animation. Tell us your budget range and we'll shape the idea to fit it, or tell you honestly if it won't.</p>
             </details>
             <details>
@@ -261,8 +303,8 @@
         <div class="contact-sec__inner">
           <div class="contact-sec__copy">
             <p class="eyebrow"><span>Get a quote</span></p>
-            <h2 id="contact-h" class="display">Planning your next commercial?</h2>
-            <p class="lede">Tell us the brand, the product and when it needs to go on air. We'll come back with an idea, a plan and a budget. Free, with no obligation.</p>
+            <h2 id="contact-h" class="display">Have a project in mind? Connect with us.</h2>
+            <p class="lede">TVC, corporate film or UGC videos — tell us the brand, the project and when you need it. We'll come back with an idea, a plan and a budget. Free, with no obligation.</p>
           </div>
           <div class="contact-sec__form" data-lead-mount="contact"></div>
           <div class="contact" data-contact></div>
@@ -279,7 +321,7 @@
     <dialog class="quote" id="quote" aria-labelledby="quote-h">
       <button class="quote__close" type="button" data-quote-close aria-label="Close">×</button>
       <p class="eyebrow"><span>Get a quote</span></p>
-      <h2 id="quote-h" class="quote__h">Let's plan your commercial.</h2>
+      <h2 id="quote-h" class="quote__h">Let's plan your project.</h2>
       <p class="quote__lede">Share a few details. We'll come back with an idea, a plan and a budget — free, no obligation.</p>
       <div data-lead-mount="popup"></div>
     </dialog>

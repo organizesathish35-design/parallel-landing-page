@@ -13,15 +13,15 @@ export const media = (id) => ({
   thumb: `/work/thumb/${id}.jpg`,
 })
 
-// Room 01 — the commercials that went on air
+// Room 01 — the TVCs that went on air
 export const onAir = [
-  { id: 'zestbot-tvc', kind: 'TV commercial', line: 'A kirana owner, a supply truck and a superhero landing.' },
+  { id: 'zestbot-tvc', kind: 'TVC', line: 'A kirana owner, a supply truck and a superhero landing.' },
   { id: 'isl', kind: 'Ad film · JioCinema × Sports18', line: 'Fans, a stadium and the feeling of match day.' },
   { id: 'brand-blue', kind: 'Ad film', line: 'A walk through a clothing store that makes you want to step in.' },
 ]
 
 
-// Room 02 — the method, shown on the ZestBot commercial
+// Room 02 — the method, shown on the ZestBot TVC
 export const script = [
   { t: 'act', text: 'A supply truck arrives like every morning. The truck boy starts unloading extra boxes.' },
   { t: 'who', text: 'Ravanna' },
@@ -60,8 +60,8 @@ export const crew = [
 // Room 04 — films
 export const films = ['dollars', 'mithra', 'di-files', 'harmone', 'merino']
 export const filmFormats = [
-  'TVC & ad films', 'Brand films', 'Corporate films', 'Feature movies',
-  'Short films', 'Music videos', 'Web series', 'Documentaries',
+  'TVCs', 'Video productions', 'Corporate films', 'UGC videos', 'Brand films',
+  'Feature movies', 'Short films', 'Music videos', 'Web series', 'Documentaries',
 ]
 
 // Room 05 — AI & animation, in parallel tracks
@@ -102,5 +102,9 @@ export const contact = {
 export const leads = {
   endpoint: '',
   accessKey: '',
-  needs: ['TV commercial', 'Brand film', 'Animation / AI film', 'Podcast', 'Something else'],
+  needs: [
+    'TVC', 'Ad film', 'Corporate film', 'UGC videos', 'Brand film', 'Video production',
+    'Real-estate film', 'Music video', 'Short film', 'Web series', 'Documentary', 'Feature film',
+    '2D / 3D animation', 'AI film', 'Podcast', 'Something else',
+  ],
 }
