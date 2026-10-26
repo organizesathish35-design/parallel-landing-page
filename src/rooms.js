@@ -511,6 +511,7 @@ export function initRooms({ lenis, lightbox }) {
       .map(([k, v, href]) => `<a href="${href}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}><span class="contact__k">${k}</span><span class="contact__v">${v}</span></a>`)
       .join('')
     document.querySelector('[data-cities]').textContent = contact.cities
+    document.querySelectorAll('[data-whatsapp]').forEach((a) => (a.href = contact.whatsapp))
   }
 
   return () => updaters.forEach((u) => u())

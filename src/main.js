@@ -1,6 +1,7 @@
 import './styles.css'
 import Lenis from 'lenis'
 import gsap from 'gsap'
+import { HeroScene } from './hero/HeroScene.js'
 import { wordmark } from './logo.js'
 import { createLightbox } from './lightbox.js'
 import { initRooms, progressOf } from './rooms.js'
@@ -11,7 +12,8 @@ import './focus.js'
 
 // ---------- wordmarks
 document.querySelector('[data-logo]').innerHTML = wordmark()
-document.querySelector('[data-wordmark]').innerHTML = wordmark({ title: 'PARALLEL' })
+const title = document.querySelector('[data-wordmark]')
+title.innerHTML = wordmark({ title: 'PARALLEL' })
 
 // ---------- smooth scroll
 // Touch devices already have momentum scrolling. Keep Lenis involved so the
@@ -56,12 +58,53 @@ const parallaxEls = [...document.querySelectorAll('[data-parallax]')]
 const progressBar = document.querySelector('[data-progress]')
 const hero = document.getElementById('hero')
 
+// ---------- the hero: one day passes over the tower, then the camera leans in as you scroll away
+const canvas = document.getElementById('gl')
+const scene = new HeroScene(canvas)
+const day = { v: 0 }
+if (!isTouch) {
+  addEventListener('pointermove', (e) => {
+    scene.setPointer((e.clientX / innerWidth) * 2 - 1, -((e.clientY / innerHeight) * 2 - 1))
+  }, { passive: true })
+}
+new ResizeObserver(() => scene.resize()).observe(canvas)
+let heroOnScreen = true
+new IntersectionObserver(([e]) => {
+  heroOnScreen = e.isIntersecting
+  heroOnScreen ? scene.start() : scene.stop()
+}).observe(hero)
+
+const fontsReady = document.fonts?.ready ?? Promise.resolve()
+Promise.all([scene.load(), fontsReady])
+  .then(() => {
+    hero.classList.add('is-live')
+    if (motion.reduced) day.v = 1
+    else gsap.to(day, { v: 1, duration: 7.5, delay: 0.8, ease: 'sine.inOut' }) // dawn to night, once
+    if (heroOnScreen) scene.start()
+  })
+  .catch((err) => console.error(err)) // the still photo stays as the hero
+
+// the wordmark builds itself: letters rise, the two bars cross in from either side
+if (!motion.reduced) {
+  gsap.timeline({ delay: 0.15, defaults: { ease: 'expo.out' } })
+    .from(title.querySelectorAll('.glyph:not(.glyph--bar) .glyph__inner'), { yPercent: 90, autoAlpha: 0, duration: 1.4, stagger: 0.06 }, 0)
+    .from(title.querySelector('.glyph--a .glyph__inner'), { yPercent: -160, xPercent: 60, autoAlpha: 0, duration: 1.6 }, 0.2)
+    .from(title.querySelector('.glyph--b .glyph__inner'), { yPercent: 160, xPercent: -60, autoAlpha: 0, duration: 1.6 }, 0.3)
+}
+
 motion.onChange((reduced) => {
   lenis.options.lerp = reduced ? 1 : smoothLerp
   if (reduced) parallaxEls.forEach((el) => el.style.removeProperty('--parallax-y'))
 })
 
 function tick() {
+  if (scene.ready) {
+    scene.setProgress(day.v)
+    // scrolling past the hero walks the camera toward the lit floor (half way, never through the glass)
+    const out = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / hero.offsetHeight))
+    scene.setEnter(motion.reduced ? 0 : out * 0.5)
+  }
+
   // Shared depth pass: each marked layer gets a small offset based on its
   // distance from the viewport centre. The effect is deliberately subtle so
   // the page feels continuous rather than like a collection of animations.
@@ -107,8 +150,12 @@ tick()
 
 if (import.meta.env.DEV) {
   // step the page by hand (the preview pane can pause requestAnimationFrame)
+  window.__hero = scene
   window.__step = (n = 3) => {
-    for (let i = 0; i < n; i++) gsap.ticker.tick()
+    for (let i = 0; i < n; i++) {
+      gsap.ticker.tick()
+      if (scene.ready) scene.update()
+    }
   }
   window.__at = (id, q) => {
     const el = document.getElementById(id)

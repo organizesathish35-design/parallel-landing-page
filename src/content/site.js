@@ -60,8 +60,8 @@ export const crew = [
 // Room 04 — films
 export const films = ['dollars', 'mithra', 'di-files', 'harmone', 'merino']
 export const filmFormats = [
-  'TVC & ad films', 'Brand films', 'Corporate films', 'Feature movies',
-  'Short films', 'Music videos', 'Web series', 'Documentaries',
+  'TVCs', 'Video productions', 'Corporate films', 'UGC videos', 'Brand films',
+  'Feature movies', 'Short films', 'Music videos', 'Web series', 'Documentaries',
 ]
 
 // Room 05 — AI & animation, in parallel tracks
@@ -102,5 +102,9 @@ export const contact = {
 export const leads = {
   endpoint: '',
   accessKey: '',
-  needs: ['TVC', 'Brand film', 'Animation / AI film', 'Podcast', 'Something else'],
+  needs: [
+    'TVC', 'Ad film', 'Corporate film', 'UGC videos', 'Brand film', 'Video production',
+    'Real-estate film', 'Music video', 'Short film', 'Web series', 'Documentary', 'Feature film',
+    '2D / 3D animation', 'AI film', 'Podcast', 'Something else',
+  ],
 }
