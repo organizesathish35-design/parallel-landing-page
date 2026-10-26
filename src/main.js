@@ -34,13 +34,15 @@ gsap.ticker.lagSmoothing(0)
 // In-page links scroll smoothly and also move keyboard focus to the target,
 // so the skip link leaves screen-reader users where they landed.
 // Links marked data-lead open the quote popup instead (leads.js).
+let piloting = false // a scripted scroll is running; the hero autopilot stays out of its way
 document.querySelectorAll('a[href^="#"]:not([data-lead])').forEach((a) =>
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href')
     const target = id.length > 1 && document.querySelector(id)
     if (!target) return
     e.preventDefault()
-    lenis.scrollTo(id === '#top' ? 0 : id, { duration: motion.reduced ? 0.01 : 1.6, force: true })
+    piloting = true
+    lenis.scrollTo(id === '#top' ? 0 : id, { duration: motion.reduced ? 0.01 : 1.6, force: true, onComplete: () => (piloting = false) })
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1')
     target.focus({ preventScroll: true })
   }),
@@ -51,6 +53,13 @@ const updateRooms = initRooms({ lenis, lightbox })
 initLeads({ lenis })
 initReveal()
 
+// service cards with a film loop: play only while on screen, and not at all with reduced motion
+const svcVideos = new IntersectionObserver((entries) => entries.forEach(({ target: v, isIntersecting }) => {
+  if (isIntersecting && !motion.reduced) v.play().catch(() => {})
+  else v.pause()
+}), { rootMargin: '100px 0px' })
+document.querySelectorAll('[data-svc-video]').forEach((v) => svcVideos.observe(v))
+
 const root = document.documentElement
 const rooms = [...document.querySelectorAll('[data-room]')]
 const navLinks = [...document.querySelectorAll('.nav__links a')]
@@ -58,10 +67,22 @@ const parallaxEls = [...document.querySelectorAll('[data-parallax]')]
 const progressBar = document.querySelector('[data-progress]')
 const hero = document.getElementById('hero')
 
-// ---------- the hero: one day passes over the tower, then the camera leans in as you scroll away
+// ---------- the hero: the first part of its scroll is one day over the tower (sunrise to night),
+// the rest is the walk through the lit office glass into the next section
 const canvas = document.getElementById('gl')
 const scene = new HeroScene(canvas)
-const day = { v: 0 }
+const { clamp } = gsap.utils
+const seg = (q, a, b) => {
+  const t = clamp(0, 1, (q - a) / (b - a))
+  return t * t * (3 - 2 * t)
+}
+const ENTER_START = 0.3 // share of the hero's scroll that is the day; the rest is the walk in
+const DAY_SECONDS = 1.6
+const WALK_SECONDS = 1.1
+const heroUi = hero.querySelector('.hero__ui')
+const cue = hero.querySelector('.scrollcue')
+const glass = hero.querySelector('.hero__glass')
+const white = hero.querySelector('.hero__white')
 if (!isTouch) {
   addEventListener('pointermove', (e) => {
     scene.setPointer((e.clientX / innerWidth) * 2 - 1, -((e.clientY / innerHeight) * 2 - 1))
@@ -78,11 +99,38 @@ const fontsReady = document.fonts?.ready ?? Promise.resolve()
 Promise.all([scene.load(), fontsReady])
   .then(() => {
     hero.classList.add('is-live')
-    if (motion.reduced) day.v = 1
-    else gsap.to(day, { v: 1, duration: 7.5, delay: 0.8, ease: 'sine.inOut' }) // dawn to night, once
     if (heroOnScreen) scene.start()
   })
   .catch((err) => console.error(err)) // the still photo stays as the hero
+
+// ---------- autopilot: one scroll down inside the hero plays it through to the next section;
+// one scroll up from there plays it back to the top. Visitors never scrub the scene by hand.
+const heroTravel = () => hero.offsetHeight - innerHeight
+const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2)
+function glide([[to, duration], ...rest]) {
+  lenis.scrollTo(to, {
+    duration, easing: easeInOut, lock: true, force: true,
+    onComplete: () => (rest.length ? glide(rest) : (piloting = false)),
+  })
+}
+lenis.on('scroll', ({ scroll, direction }) => {
+  if (piloting || motion.reduced) return
+  const next = hero.offsetTop + hero.offsetHeight // top of the next section
+  const dayEnd = ENTER_START * heroTravel()
+  if (scroll <= 1 || scroll >= next - 1) return
+  piloting = true
+  if (direction > 0) {
+    glide(scroll < dayEnd
+      ? [[dayEnd, DAY_SECONDS * (1 - scroll / dayEnd) + 0.2], [next, WALK_SECONDS]]
+      : [[next, WALK_SECONDS * ((next - scroll) / (next - dayEnd)) + 0.2]])
+  } else {
+    glide(scroll > dayEnd
+      ? [[dayEnd, WALK_SECONDS * ((scroll - dayEnd) / (next - dayEnd))], [0, DAY_SECONDS * 0.7]]
+      : [[0, DAY_SECONDS * 0.7 * (scroll / dayEnd) + 0.2]])
+  }
+})
+// touch scrolling is native: hold the page still while the autopilot drives
+addEventListener('touchmove', (e) => piloting && e.cancelable && e.preventDefault(), { passive: false })
 
 // the wordmark builds itself: letters rise, the two bars cross in from either side
 if (!motion.reduced) {
@@ -98,12 +146,19 @@ motion.onChange((reduced) => {
 })
 
 function tick() {
-  if (scene.ready) {
-    scene.setProgress(day.v)
-    // scrolling past the hero walks the camera toward the lit floor (half way, never through the glass)
-    const out = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / hero.offsetHeight))
-    scene.setEnter(motion.reduced ? 0 : out * 0.5)
-  }
+  // the hero: day first, then the walk in
+  const hp = progressOf(hero)
+  const enter = clamp(0, 1, (hp - ENTER_START) / (1 - ENTER_START))
+  scene.setProgress(clamp(0, 1, hp / ENTER_START)) // the day rewinds when the scroll does
+  scene.setEnter(enter)
+  // the words and the action stay up through the whole day and leave as we walk in
+  const leave = seg(enter, 0, 0.14)
+  heroUi.style.opacity = (1 - leave).toFixed(3)
+  heroUi.style.transform = `translateY(${(-50 * leave).toFixed(1)}px)`
+  heroUi.style.visibility = leave > 0.98 ? 'hidden' : ''
+  cue.style.opacity = (1 - seg(hp, 0, 0.03)).toFixed(3)
+  glass.style.opacity = (seg(enter, 0.45, 0.8) * (1 - seg(enter, 0.86, 1))).toFixed(3)
+  white.style.opacity = seg(enter, 0.8, 1).toFixed(3)
 
   // Shared depth pass: each marked layer gets a small offset based on its
   // distance from the viewport centre. The effect is deliberately subtle so
