@@ -78,7 +78,7 @@ mark { background: var(--accent); color: var(--black); padding: 0 3px; }
 
 /* tracked uppercase micro-type */
 .eyebrow, .nav__links a, .btn, .reel__kind, .chips button, .stepno, .label,
-.compare__tag, .formats, .card__meta, .steps, .sets button, .pod b, .foot, .contact__k, .lb__meta p, .screen__tag {
+.compare__tag, .formats, .card__meta, .steps, .sets button, .pod b, .foot, .contact__k, .lb__meta p:not(.lb__title), .screen__tag {
   font-family: var(--text);
   font-weight: 500;
   font-size: var(--fs-label);
@@ -220,6 +220,9 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
 .statement b { color: var(--bone); }
 .hero__lede { margin-top: var(--s-5); max-width: 46ch; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--bone-86); }
 .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
+/* the question sits over the buttons: "Have a project in mind?" -> Connect with us */
+.hero__ask { margin-top: var(--s-6); font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.2; color: var(--bone); }
+.hero__ask + .hero__cta { margin-top: var(--s-3); }
 .hero__proof { margin-top: var(--s-6); font-size: 14px; line-height: 1.5; color: var(--bone-86); }
 .hero__proof span { margin-right: var(--s-2); font-size: var(--fs-label); font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; color: var(--bone-60); }
 
@@ -496,8 +499,8 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
 .lb__v { width: 100%; max-height: 78vh; background: #000; box-shadow: var(--shadow); }
 .lb__meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 16px; }
 .lb__meta > div { display: grid; gap: 4px; }
-.lb__meta p { color: var(--ink-60); }
-.lb__meta h3 { font-family: var(--display); font-weight: 600; text-transform: uppercase; }
+.lb__meta p:not(.lb__title) { color: var(--ink-60); }
+.lb__title { font-family: var(--display); font-weight: 600; font-size: 1.17em; text-transform: uppercase; } /* plain text, not a heading: it is empty until a film opens */
 .lb__close { position: absolute; top: 16px; right: var(--gutter); width: 48px; height: 48px; display: grid; place-items: center; font-size: 40px; line-height: 1; color: var(--ink); }
 .lb__close:hover { color: var(--ink-60); }
 
@@ -511,6 +514,9 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   .process__copy { width: auto; right: 0; bottom: auto; padding: 88px var(--gutter) 28px; justify-content: flex-start; background: linear-gradient(180deg, var(--paper) 80%, rgba(255, 255, 255, 0)); }
   .ptexts { min-height: 250px; max-width: none; }
   .rail { margin-bottom: 18px; }
+  /* the copy sits pinned above the image here: one row of chips, or the second row covers the frame */
+  .ptext .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .ptext .chips button { flex: none; padding: 10px 9px; letter-spacing: 0.16em; }
   .nav__links { display: none; }
   .nav { grid-template-columns: 1fr auto; }
   .reel { grid-template-columns: 1fr; }
@@ -543,6 +549,7 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
   .statement { margin-top: var(--s-6); font-size: clamp(28px, 8.4vw, 36px); line-height: 1.05; }
   .hero__lede { margin-top: 20px; font-size: 16px; line-height: 1.6; }
   .hero__cta { flex-wrap: nowrap; gap: var(--s-2); margin-top: var(--s-6); }
+  .hero__ask { margin-top: var(--s-5); font-size: 16px; }
   .hero__cta .btn--lg { flex: 1 1 0; justify-content: center; min-height: 52px; padding: 0 var(--s-3); letter-spacing: 0.14em; }
   .hero__cta .btn i { display: none; }
   .hero__proof { margin-top: var(--s-6); font-size: 13px; line-height: 1.6; }
@@ -603,8 +610,14 @@ html.is-light .nav__logo .wordmark .glyph--a { fill: var(--ink); }
 /* ---------- nav actions ---------- */
 .nav__right { display: flex; align-items: center; gap: var(--s-4); }
 
-@media (max-width: 1300px) {
-  .nav__links { gap: 22px; }
+.nav__links a, .nav__right .btn { white-space: nowrap; }
+@media (max-width: 1480px) {
+  .nav__links { gap: 16px; }
+  .nav__links a { letter-spacing: 0.18em; }
+}
+/* below this the seven links no longer fit beside the logo and the button */
+@media (max-width: 1250px) {
+  .nav__links { display: none; }
 }
 @media (max-width: 720px) {
   .nav__right { gap: var(--s-3); }
@@ -809,7 +822,7 @@ html.focus-mode .lb.is-idle .lb__meta, html.focus-mode .lb.is-idle .lb__close { 
   .ptext:nth-child(4) { order: 7; margin-top: var(--s-5); }
   .layer--screen { order: 8; }
   .ptext .lede { margin-top: var(--s-3); }
-  .ptext .chips { margin-top: var(--s-4); }
+  .ptext .chips { margin-top: var(--s-4); flex-wrap: wrap; overflow: visible; } /* stacked layout: wrapping is fine */
   .layer {
     position: static; transform: none !important; opacity: 1 !important; visibility: visible !important;
     pointer-events: auto !important; z-index: auto !important;
