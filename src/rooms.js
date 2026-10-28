@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 import {
   byId, fmtDur, media, onAir, script, panels, compare, crew,
-  films, filmFormats, labTracks, labSteps, sets, podcastSteps, contact,
+  films, filmKinds, filmFormats, labTracks, labSteps, sets, podcastSteps, contact,
 } from './content/site.js'
 import { motion } from './motion.js'
 
@@ -58,7 +58,7 @@ motion.onChange((reduced) => {
   if (reduced) cards.forEach((c) => c._stop())
 })
 
-function card(v, { wide = true } = {}) {
+function card(v, { wide = true, title = v.title } = {}) {
   const m = media(v.id)
   const el = h(`
     <button class="card" type="button" data-id="${v.id}" style="--car:${v.w}/${v.h}">
@@ -67,7 +67,7 @@ function card(v, { wide = true } = {}) {
         <video muted playsinline loop preload="none"></video>
         <span class="card__play" aria-hidden="true">▶</span>
       </span>
-      <span class="card__title">${v.title}</span>
+      <span class="card__title">${title}</span>
       ${wide ? `<span class="card__meta"><span>${v.client}</span><span>${fmtDur(v.dur)}</span></span>` : ''}
     </button>`)
   el.setAttribute('aria-label', `Play ${v.title} — ${v.client}`)
@@ -122,7 +122,7 @@ export function initRooms({ lenis, lightbox }) {
     const span = (1 - START) / onAir.length
     const items = onAir.map((o, i) => {
       const v = byId[o.id]
-      const b = h(`<li><button type="button"><span>${v.title}</span><em>${v.client}</em></button></li>`)
+      const b = h(`<li><button type="button"><span>${o.label}: ${v.title}</span><em>${v.client}</em></button></li>`)
       b.firstElementChild.addEventListener('click', () => {
         const top = room.offsetTop + (START + span * (i + 0.35)) * (room.offsetHeight - innerHeight)
         lenis.scrollTo(top, { duration: 1.4 })
@@ -139,7 +139,7 @@ export function initRooms({ lenis, lightbox }) {
       setSrc(video, media(o.id).full) // the real 720p film on the big screen
       video.poster = media(o.id).poster
       kind.textContent = `${o.kind} · ${fmtDur(v.dur)}`
-      title.textContent = `${v.title}`
+      title.textContent = `${o.label}: ${v.title}` // brand and format first: "Brand Blue ad film: Step Inside the Store"
       line.textContent = `${v.client} — ${o.line}`
       items.forEach((b, j) => b.classList.toggle('is-on', j === i))
       gsap.fromTo([kind, title, line], { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power3.out' })
@@ -361,7 +361,7 @@ export function initRooms({ lenis, lightbox }) {
     const track = $(room, '[data-strip-track]')
     $(room, '[data-formats]').innerHTML = filmFormats.map((f) => `<li>${f}</li>`).join('')
     const cards = films.map((id) => {
-      const c = card(byId[id])
+      const c = card(byId[id], { title: `${byId[id].title} · ${filmKinds[id]}` })
       c.addEventListener('click', () => play(id))
       track.append(c)
       return c

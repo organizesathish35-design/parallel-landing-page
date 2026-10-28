@@ -33,6 +33,8 @@ VIDEOS = [
     ("merino", AI / "Stock & Motion Graphics _ starts from 8k-min", "Merino*", "film", "Rooted to the Planet", "Merino"),
     # behind the scenes (trim the title card and the old logo sting)
     ("bts", UGC / "TVC  bts", "KathaFrames BTS*", "bts", "Behind the Scenes", "ZestBot shoot", 3.2, 31.6),
+    # sent directly (Downloads/Rohan .mov, 4K 120 fps); the site loop is 4-12 s, cut by hand
+    ("rohan-roy", Path(r"C:/Users/Admin/Downloads"), "Rohan*.mov", "bts", "Rohan Roy", "Behind the scenes · on set"),
     # AI & animation — vertical
     ("fennec-cricket", SRC / "AI Videos", "Copy of Fennec*", "ai", "Game Day Ritual", "Fennec Fox"),
     ("zestbot-ai", SRC / "AI Videos", "Kirana store zt*", "ai", "Your Kirana, Delivered", "ZestBot"),

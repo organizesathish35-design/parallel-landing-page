@@ -15,9 +15,9 @@ export const media = (id) => ({
 
 // Room 01 — the commercials that went on air
 export const onAir = [
-  { id: 'zestbot-tvc', kind: 'TV commercial', line: 'A kirana owner, a supply truck and a superhero landing.' },
-  { id: 'isl', kind: 'Ad film · JioCinema × Sports18', line: 'Fans, a stadium and the feeling of match day.' },
-  { id: 'brand-blue', kind: 'Ad film', line: 'A walk through a clothing store that makes you want to step in.' },
+  { id: 'zestbot-tvc', kind: 'TV commercial', label: 'ZestBot TV commercial', line: 'A kirana owner, a supply truck and a superhero landing.' },
+  { id: 'isl', kind: 'Ad film · JioCinema × Sports18', label: 'ISL ad film', line: 'Fans, a stadium and the feeling of match day.' },
+  { id: 'brand-blue', kind: 'Ad film', label: 'Brand Blue ad film', line: 'A walk through a clothing store that makes you want to step in.' },
 ]
 
 
@@ -38,8 +38,8 @@ export const script = [
 export const panels = ['landing', 'owner', 'truckboy', 'pickup', 'road', 'door', 'meat', 'clock', 'family', 'flying', 'hero-pose', 'ontruck', 'shop']
 
 export const compare = [
+  { id: 'owner', label: 'The shopkeeper' }, // first = the frame shown by default
   { id: 'landing', label: 'The landing' },
-  { id: 'owner', label: 'The shopkeeper' },
   { id: 'truckboy', label: 'The truck boy' },
   { id: 'pickup', label: 'The delivery' },
   { id: 'road', label: 'The road' },
@@ -58,7 +58,16 @@ export const crew = [
 ]
 
 // Room 04 — films
-export const films = ['dollars', 'mithra', 'di-files', 'harmone', 'merino']
+export const films = ['dollars', 'rohan-roy', 'mithra', 'di-files', 'harmone', 'merino']
+// what each film is, shown after its title ("Beyond Today · Dollars Group corporate film")
+export const filmKinds = {
+  dollars: 'Dollars Group corporate film',
+  'rohan-roy': 'behind the scenes',
+  mithra: 'Mithra Developers brand film',
+  'di-files': 'short film',
+  harmone: 'music video',
+  merino: 'Merino brand film',
+}
 export const filmFormats = [
   'Video production', 'Commercials', 'Corporate films', 'UGC videos', 'Brand films',
   'Feature movies', 'Short films', 'Music videos', 'Web series', 'Documentaries',
